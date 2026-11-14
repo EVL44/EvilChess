@@ -1,0 +1,50 @@
+# Local stack: Postgres + Redis + the evilchess server.
+#   docker compose -f infra/docker-compose.yml up -d            # everything
+#   docker compose -f infra/docker-compose.yml up -d db redis   # only dependencies (run the server from your IDE)
+name: evilchess
+
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: evilchess
+      POSTGRES_USER: evilchess
+      POSTGRES_PASSWORD: evilchess   # local development only
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U evilchess -d evilchess"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  server:
+    build:
+      context: ../server
+    environment:
+      DB_URL: jdbc:postgresql://db:5432/evilchess
+      DB_USER: evilchess
+      DB_PASSWORD: evilchess
+      REDIS_HOST: redis
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+volumes:
+  db-data:

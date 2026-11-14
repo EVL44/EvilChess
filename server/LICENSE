@@ -1,0 +1,8 @@
+Copyright (c) 2026 evilchess. All rights reserved.
+
+The contents of this /server directory are proprietary and are NOT covered by
+the GNU GPL that applies to /app. No licence is granted to copy, modify or
+distribute this code without written permission.
+
+The server runs Stockfish (GPLv3) only as a separate process over UCI; it does
+not link to or embed Stockfish. See /docs/adr/0001-licensing.md.
