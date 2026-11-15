@@ -126,3 +126,13 @@ if(NOT CMAKE_BUILD_TYPE MATCHES "Debug")
   install(FILES "${AOT_LIBRARY}" DESTINATION "${INSTALL_BUNDLE_LIB_DIR}"
     COMPONENT Runtime)
 endif()
+
+# evilchess: bundle the Stockfish engine next to the executable
+# (app/engines/linux/stockfish, fetched by tool/fetch_stockfish.sh).
+set(EVILCHESS_STOCKFISH "${CMAKE_CURRENT_SOURCE_DIR}/../engines/linux/stockfish")
+if(EXISTS "${EVILCHESS_STOCKFISH}")
+  install(PROGRAMS "${EVILCHESS_STOCKFISH}"
+    DESTINATION "${CMAKE_INSTALL_PREFIX}/engines" COMPONENT Runtime)
+else()
+  message(WARNING "Stockfish not found at ${EVILCHESS_STOCKFISH}; run tool/fetch_stockfish.sh. The app will look for stockfish on PATH instead.")
+endif()

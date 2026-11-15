@@ -46,3 +46,6 @@ app.*.map.json
 
 # Widget Preview related
 .widget_preview/
+
+# Desktop Stockfish binaries (fetched by tool/fetch_stockfish.sh)
+/engines/

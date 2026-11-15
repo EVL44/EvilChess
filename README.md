@@ -18,7 +18,8 @@ Why the split licence: see [docs/adr/0001-licensing.md](docs/adr/0001-licensing.
 | Phase | Scope | State |
 |---|---|---|
 | 0 | Monorepo, CI, design system, EN/FR/AR + RTL, app shell | ✅ done |
-| 1 | Offline analysis MVP (PGN + Lichess/Chess.com import, Stockfish, review screen) | next |
+| 1 | Offline analysis MVP (PGN + Lichess/Chess.com import, Stockfish, review screen) | ✅ done |
+| 2 | Reports + puzzles from my mistakes | next |
 
 ## Prerequisites
 
@@ -62,6 +63,25 @@ an "update your browser" page (`lib/bootstrap/bootstrap_js_fallback.dart`). Supp
 
 Localizations are generated from `app/lib/l10n/*.arb` on `pub get` / build
 (`flutter gen-l10n` to regenerate manually).
+
+### The chess engine (Stockfish 19, GPL-3.0)
+
+| Platform | Engine | Setup |
+|---|---|---|
+| Android, iOS | compiled into the app (`multistockfish`) | none |
+| Web | WebAssembly build in `app/web/engine/` (stockfish.js lite, single-threaded) | none |
+| Windows, Linux | official binary, bundled next to the executable | run `bash tool/fetch_stockfish.sh` once before building |
+| macOS | official binary | not bundled yet: `brew install stockfish` (found on PATH) |
+
+All of them sit behind one interface (`lib/core/engine/`): a `UciTransport` per platform and a
+shared `UciEngine`. Analysis results are cached per position in the local database.
+
+### Code generation
+
+The Drift database code (`lib/core/db/app_database.g.dart`) is committed. After changing
+tables run `dart run build_runner build --delete-conflicting-outputs`.
+The opening book (`assets/openings/book.tsv`) is built from Lichess's CC0 tables with
+`dart run tool/build_opening_book.dart <folder with a.tsv … e.tsv>`.
 
 ### App checks (same as CI)
 
@@ -109,8 +129,11 @@ GitHub Actions (`.github/workflows`):
 ```
 app/lib/
   app.dart, main.dart
-  core/         theme (tokens, palette, board themes, move classes), router, settings, shared widgets
-  features/     one folder per feature: home, analyze, puzzles, play, profile, settings, shell, design_system
+  core/         theme, router, settings, shared widgets, db (Drift), engine (UCI + per-platform transports)
+  features/     one folder per feature:
+                games (PGN + Lichess/Chess.com import, library), analysis (win%, accuracy,
+                classification, opening book, runner), review (review screen),
+                home, analyze, puzzles, play, profile, settings, shell, design_system
   l10n/         ARB files (en, fr, ar) + generated localizations
 ```
 
@@ -122,3 +145,7 @@ notation — wrap those in `ForceLtr`.
   [dartchess](https://pub.dev/packages/dartchess) by lichess.org (GPL-3.0).
 - Pieces: cburnett set (via chessground), CC BY-SA 3.0, by Colin M.L. Burnett.
 - Fonts: Nunito and Cairo, SIL Open Font License 1.1.
+- Engine: [Stockfish](https://stockfishchess.org) (GPL-3.0); web build from
+  [stockfish.js](https://github.com/nmrugg/stockfish.js); mobile via
+  [multistockfish](https://pub.dev/packages/multistockfish).
+- Opening names: [lichess-org/chess-openings](https://github.com/lichess-org/chess-openings) (CC0).
