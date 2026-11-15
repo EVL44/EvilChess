@@ -339,6 +339,341 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Maybe later'**
   String get buttonSecondary;
+
+  /// No description provided for @importGames.
+  ///
+  /// In en, this message translates to:
+  /// **'Import games'**
+  String get importGames;
+
+  /// No description provided for @importPasteTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste PGN'**
+  String get importPasteTab;
+
+  /// No description provided for @importPasteHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste one or more games in PGN format'**
+  String get importPasteHint;
+
+  /// No description provided for @importFromFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Open a .pgn file'**
+  String get importFromFile;
+
+  /// No description provided for @importButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Import'**
+  String get importButton;
+
+  /// No description provided for @importOnlineTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Online accounts'**
+  String get importOnlineTab;
+
+  /// No description provided for @usernameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Username'**
+  String get usernameLabel;
+
+  /// No description provided for @linkAndSync.
+  ///
+  /// In en, this message translates to:
+  /// **'Link & import'**
+  String get linkAndSync;
+
+  /// No description provided for @syncNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync'**
+  String get syncNow;
+
+  /// No description provided for @unlinkAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlink'**
+  String get unlinkAccount;
+
+  /// No description provided for @lastSynced.
+  ///
+  /// In en, this message translates to:
+  /// **'Last synced {when}'**
+  String lastSynced(String when);
+
+  /// No description provided for @neverSynced.
+  ///
+  /// In en, this message translates to:
+  /// **'Not synced yet'**
+  String get neverSynced;
+
+  /// No description provided for @importingCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Importing… {count} games'**
+  String importingCount(int count);
+
+  /// No description provided for @noGamesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No games yet'**
+  String get noGamesTitle;
+
+  /// No description provided for @noGamesBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Import your games from Lichess or Chess.com, or paste a PGN, and get a full free review.'**
+  String get noGamesBody;
+
+  /// No description provided for @importFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Import failed: {message}'**
+  String importFailed(String message);
+
+  /// No description provided for @pgnNoGames.
+  ///
+  /// In en, this message translates to:
+  /// **'No playable game found in this PGN.'**
+  String get pgnNoGames;
+
+  /// No description provided for @notAnalyzed.
+  ///
+  /// In en, this message translates to:
+  /// **'Not analyzed'**
+  String get notAnalyzed;
+
+  /// No description provided for @accuracyShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Accuracy'**
+  String get accuracyShort;
+
+  /// No description provided for @deleteGame.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete game'**
+  String get deleteGame;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @close.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get close;
+
+  /// No description provided for @gameReviewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Game review'**
+  String get gameReviewTitle;
+
+  /// No description provided for @gameNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'This game no longer exists.'**
+  String get gameNotFound;
+
+  /// No description provided for @analyzingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Analyzing your game…'**
+  String get analyzingTitle;
+
+  /// No description provided for @analyzingBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Stockfish is checking every move on your device. {percent}%'**
+  String analyzingBody(int percent);
+
+  /// No description provided for @analysisFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Analysis failed: {message}'**
+  String analysisFailed(String message);
+
+  /// No description provided for @tryAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get tryAgain;
+
+  /// No description provided for @reanalyze.
+  ///
+  /// In en, this message translates to:
+  /// **'Analyze again'**
+  String get reanalyze;
+
+  /// No description provided for @flipBoard.
+  ///
+  /// In en, this message translates to:
+  /// **'Flip board'**
+  String get flipBoard;
+
+  /// No description provided for @firstMove.
+  ///
+  /// In en, this message translates to:
+  /// **'First move'**
+  String get firstMove;
+
+  /// No description provided for @previousMove.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous move'**
+  String get previousMove;
+
+  /// No description provided for @nextMove.
+  ///
+  /// In en, this message translates to:
+  /// **'Next move'**
+  String get nextMove;
+
+  /// No description provided for @lastMove.
+  ///
+  /// In en, this message translates to:
+  /// **'Last move'**
+  String get lastMove;
+
+  /// No description provided for @nextMistake.
+  ///
+  /// In en, this message translates to:
+  /// **'Next mistake'**
+  String get nextMistake;
+
+  /// No description provided for @noMoreMistakes.
+  ///
+  /// In en, this message translates to:
+  /// **'No more mistakes after this move.'**
+  String get noMoreMistakes;
+
+  /// No description provided for @moveIsClass.
+  ///
+  /// In en, this message translates to:
+  /// **'{move} is {classification}'**
+  String moveIsClass(String move, String classification);
+
+  /// No description provided for @bestWas.
+  ///
+  /// In en, this message translates to:
+  /// **'Best was {move}'**
+  String bestWas(String move);
+
+  /// No description provided for @engineLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Engine line'**
+  String get engineLine;
+
+  /// No description provided for @retryPosition.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry this position'**
+  String get retryPosition;
+
+  /// No description provided for @retryPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Find a better move for {side}'**
+  String retryPrompt(String side);
+
+  /// No description provided for @retryCorrect.
+  ///
+  /// In en, this message translates to:
+  /// **'Nice! That\'s the best move.'**
+  String get retryCorrect;
+
+  /// No description provided for @retryGood.
+  ///
+  /// In en, this message translates to:
+  /// **'Good enough — that keeps the advantage.'**
+  String get retryGood;
+
+  /// No description provided for @retryWrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Not quite. Try again!'**
+  String get retryWrong;
+
+  /// No description provided for @retryShowAnswer.
+  ///
+  /// In en, this message translates to:
+  /// **'Show answer'**
+  String get retryShowAnswer;
+
+  /// No description provided for @retryBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to review'**
+  String get retryBack;
+
+  /// No description provided for @white.
+  ///
+  /// In en, this message translates to:
+  /// **'White'**
+  String get white;
+
+  /// No description provided for @black.
+  ///
+  /// In en, this message translates to:
+  /// **'Black'**
+  String get black;
+
+  /// No description provided for @startOfGame.
+  ///
+  /// In en, this message translates to:
+  /// **'Start of the game'**
+  String get startOfGame;
+
+  /// No description provided for @moveSemantics.
+  ///
+  /// In en, this message translates to:
+  /// **'Move {number} {side}: {san}, {classification}'**
+  String moveSemantics(
+    int number,
+    String side,
+    String san,
+    String classification,
+  );
+
+  /// No description provided for @evalBarLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Evaluation {eval}'**
+  String evalBarLabel(String eval);
+
+  /// No description provided for @evalGraphLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Evaluation graph. Tap to jump to a move.'**
+  String get evalGraphLabel;
+
+  /// No description provided for @engineMissing.
+  ///
+  /// In en, this message translates to:
+  /// **'No chess engine available on this device.'**
+  String get engineMissing;
+
+  /// No description provided for @openingLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Opening'**
+  String get openingLabel;
+
+  /// No description provided for @importResult.
+  ///
+  /// In en, this message translates to:
+  /// **'{added, plural, =0{No new games} =1{1 new game imported} other{{added} new games imported}}'**
+  String importResult(int added);
 }
 
 class _AppLocalizationsDelegate

@@ -8,6 +8,7 @@ import '../../features/home/home_screen.dart';
 import '../../features/play/play_screen.dart';
 import '../../features/profile/profile_screen.dart';
 import '../../features/puzzles/puzzles_screen.dart';
+import '../../features/review/review_screen.dart';
 import '../../features/settings/settings_screen.dart';
 import '../../features/shell/app_shell.dart';
 
@@ -19,6 +20,8 @@ abstract final class Routes {
   static const profile = '/profile';
   static const settings = '/settings';
   static const designSystem = '/design-system';
+  static String review(String gameId) =>
+      '/analyze/game/${Uri.encodeComponent(gameId)}';
 }
 
 final _rootKey = GlobalKey<NavigatorState>(debugLabel: 'root');
@@ -32,7 +35,22 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         builder: (context, state, shell) => AppShell(shell: shell),
         branches: [
           _branch(Routes.home, const HomeScreen()),
-          _branch(Routes.analyze, const AnalyzeScreen()),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Routes.analyze,
+                builder: (context, state) => const AnalyzeScreen(),
+                routes: [
+                  GoRoute(
+                    path: 'game/:id',
+                    parentNavigatorKey: _rootKey,
+                    builder: (context, state) =>
+                        ReviewScreen(gameId: state.pathParameters['id']!),
+                  ),
+                ],
+              ),
+            ],
+          ),
           _branch(Routes.puzzles, const PuzzlesScreen()),
           _branch(Routes.play, const PlayScreen()),
           _branch(Routes.profile, const ProfileScreen()),

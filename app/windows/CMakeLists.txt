@@ -106,3 +106,13 @@ install(DIRECTORY "${PROJECT_BUILD_DIR}/${FLUTTER_ASSET_DIR_NAME}"
 install(FILES "${AOT_LIBRARY}" DESTINATION "${INSTALL_BUNDLE_DATA_DIR}"
   CONFIGURATIONS Profile;Release
   COMPONENT Runtime)
+
+# evilchess: bundle the Stockfish engine next to the executable
+# (app/engines/windows/stockfish.exe, fetched by tool/fetch_stockfish.sh).
+set(EVILCHESS_STOCKFISH "${CMAKE_CURRENT_SOURCE_DIR}/../engines/windows/stockfish.exe")
+if(EXISTS "${EVILCHESS_STOCKFISH}")
+  install(FILES "${EVILCHESS_STOCKFISH}"
+    DESTINATION "${CMAKE_INSTALL_PREFIX}/engines" COMPONENT Runtime)
+else()
+  message(WARNING "Stockfish not found at ${EVILCHESS_STOCKFISH}; run tool/fetch_stockfish.sh. The app will look for stockfish on PATH instead.")
+endif()

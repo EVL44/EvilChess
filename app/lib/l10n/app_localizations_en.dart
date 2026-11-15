@@ -132,4 +132,204 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get buttonSecondary => 'Maybe later';
+
+  @override
+  String get importGames => 'Import games';
+
+  @override
+  String get importPasteTab => 'Paste PGN';
+
+  @override
+  String get importPasteHint => 'Paste one or more games in PGN format';
+
+  @override
+  String get importFromFile => 'Open a .pgn file';
+
+  @override
+  String get importButton => 'Import';
+
+  @override
+  String get importOnlineTab => 'Online accounts';
+
+  @override
+  String get usernameLabel => 'Username';
+
+  @override
+  String get linkAndSync => 'Link & import';
+
+  @override
+  String get syncNow => 'Sync';
+
+  @override
+  String get unlinkAccount => 'Unlink';
+
+  @override
+  String lastSynced(String when) {
+    return 'Last synced $when';
+  }
+
+  @override
+  String get neverSynced => 'Not synced yet';
+
+  @override
+  String importingCount(int count) {
+    return 'Importing… $count games';
+  }
+
+  @override
+  String get noGamesTitle => 'No games yet';
+
+  @override
+  String get noGamesBody =>
+      'Import your games from Lichess or Chess.com, or paste a PGN, and get a full free review.';
+
+  @override
+  String importFailed(String message) {
+    return 'Import failed: $message';
+  }
+
+  @override
+  String get pgnNoGames => 'No playable game found in this PGN.';
+
+  @override
+  String get notAnalyzed => 'Not analyzed';
+
+  @override
+  String get accuracyShort => 'Accuracy';
+
+  @override
+  String get deleteGame => 'Delete game';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get close => 'Close';
+
+  @override
+  String get gameReviewTitle => 'Game review';
+
+  @override
+  String get gameNotFound => 'This game no longer exists.';
+
+  @override
+  String get analyzingTitle => 'Analyzing your game…';
+
+  @override
+  String analyzingBody(int percent) {
+    return 'Stockfish is checking every move on your device. $percent%';
+  }
+
+  @override
+  String analysisFailed(String message) {
+    return 'Analysis failed: $message';
+  }
+
+  @override
+  String get tryAgain => 'Try again';
+
+  @override
+  String get reanalyze => 'Analyze again';
+
+  @override
+  String get flipBoard => 'Flip board';
+
+  @override
+  String get firstMove => 'First move';
+
+  @override
+  String get previousMove => 'Previous move';
+
+  @override
+  String get nextMove => 'Next move';
+
+  @override
+  String get lastMove => 'Last move';
+
+  @override
+  String get nextMistake => 'Next mistake';
+
+  @override
+  String get noMoreMistakes => 'No more mistakes after this move.';
+
+  @override
+  String moveIsClass(String move, String classification) {
+    return '$move is $classification';
+  }
+
+  @override
+  String bestWas(String move) {
+    return 'Best was $move';
+  }
+
+  @override
+  String get engineLine => 'Engine line';
+
+  @override
+  String get retryPosition => 'Retry this position';
+
+  @override
+  String retryPrompt(String side) {
+    return 'Find a better move for $side';
+  }
+
+  @override
+  String get retryCorrect => 'Nice! That\'s the best move.';
+
+  @override
+  String get retryGood => 'Good enough — that keeps the advantage.';
+
+  @override
+  String get retryWrong => 'Not quite. Try again!';
+
+  @override
+  String get retryShowAnswer => 'Show answer';
+
+  @override
+  String get retryBack => 'Back to review';
+
+  @override
+  String get white => 'White';
+
+  @override
+  String get black => 'Black';
+
+  @override
+  String get startOfGame => 'Start of the game';
+
+  @override
+  String moveSemantics(
+    int number,
+    String side,
+    String san,
+    String classification,
+  ) {
+    return 'Move $number $side: $san, $classification';
+  }
+
+  @override
+  String evalBarLabel(String eval) {
+    return 'Evaluation $eval';
+  }
+
+  @override
+  String get evalGraphLabel => 'Evaluation graph. Tap to jump to a move.';
+
+  @override
+  String get engineMissing => 'No chess engine available on this device.';
+
+  @override
+  String get openingLabel => 'Opening';
+
+  @override
+  String importResult(int added) {
+    String _temp0 = intl.Intl.pluralLogic(
+      added,
+      locale: localeName,
+      other: '$added new games imported',
+      one: '1 new game imported',
+      zero: 'No new games',
+    );
+    return '$_temp0';
+  }
 }

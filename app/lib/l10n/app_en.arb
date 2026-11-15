@@ -39,5 +39,149 @@
   "classMiss": "Miss",
   "classBlunder": "Blunder",
   "buttonPrimary": "Let's go",
-  "buttonSecondary": "Maybe later"
+  "buttonSecondary": "Maybe later",
+  "importGames": "Import games",
+  "importPasteTab": "Paste PGN",
+  "importPasteHint": "Paste one or more games in PGN format",
+  "importFromFile": "Open a .pgn file",
+  "importButton": "Import",
+  "importOnlineTab": "Online accounts",
+  "usernameLabel": "Username",
+  "linkAndSync": "Link & import",
+  "syncNow": "Sync",
+  "unlinkAccount": "Unlink",
+  "lastSynced": "Last synced {when}",
+  "@lastSynced": {
+    "placeholders": {
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "neverSynced": "Not synced yet",
+  "importingCount": "Importing… {count} games",
+  "@importingCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "noGamesTitle": "No games yet",
+  "noGamesBody": "Import your games from Lichess or Chess.com, or paste a PGN, and get a full free review.",
+  "importFailed": "Import failed: {message}",
+  "@importFailed": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "pgnNoGames": "No playable game found in this PGN.",
+  "notAnalyzed": "Not analyzed",
+  "accuracyShort": "Accuracy",
+  "deleteGame": "Delete game",
+  "cancel": "Cancel",
+  "close": "Close",
+  "gameReviewTitle": "Game review",
+  "gameNotFound": "This game no longer exists.",
+  "analyzingTitle": "Analyzing your game…",
+  "analyzingBody": "Stockfish is checking every move on your device. {percent}%",
+  "@analyzingBody": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "analysisFailed": "Analysis failed: {message}",
+  "@analysisFailed": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "tryAgain": "Try again",
+  "reanalyze": "Analyze again",
+  "flipBoard": "Flip board",
+  "firstMove": "First move",
+  "previousMove": "Previous move",
+  "nextMove": "Next move",
+  "lastMove": "Last move",
+  "nextMistake": "Next mistake",
+  "noMoreMistakes": "No more mistakes after this move.",
+  "moveIsClass": "{move} is {classification}",
+  "@moveIsClass": {
+    "placeholders": {
+      "move": {
+        "type": "String"
+      },
+      "classification": {
+        "type": "String"
+      }
+    }
+  },
+  "bestWas": "Best was {move}",
+  "@bestWas": {
+    "placeholders": {
+      "move": {
+        "type": "String"
+      }
+    }
+  },
+  "engineLine": "Engine line",
+  "retryPosition": "Retry this position",
+  "retryPrompt": "Find a better move for {side}",
+  "@retryPrompt": {
+    "placeholders": {
+      "side": {
+        "type": "String"
+      }
+    }
+  },
+  "retryCorrect": "Nice! That's the best move.",
+  "retryGood": "Good enough — that keeps the advantage.",
+  "retryWrong": "Not quite. Try again!",
+  "retryShowAnswer": "Show answer",
+  "retryBack": "Back to review",
+  "white": "White",
+  "black": "Black",
+  "startOfGame": "Start of the game",
+  "moveSemantics": "Move {number} {side}: {san}, {classification}",
+  "@moveSemantics": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      },
+      "side": {
+        "type": "String"
+      },
+      "san": {
+        "type": "String"
+      },
+      "classification": {
+        "type": "String"
+      }
+    }
+  },
+  "evalBarLabel": "Evaluation {eval}",
+  "@evalBarLabel": {
+    "placeholders": {
+      "eval": {
+        "type": "String"
+      }
+    }
+  },
+  "evalGraphLabel": "Evaluation graph. Tap to jump to a move.",
+  "engineMissing": "No chess engine available on this device.",
+  "openingLabel": "Opening",
+  "importResult": "{added, plural, =0{No new games} =1{1 new game imported} other{{added} new games imported}}",
+  "@importResult": {
+    "placeholders": {
+      "added": {
+        "type": "int"
+      }
+    }
+  }
 }
