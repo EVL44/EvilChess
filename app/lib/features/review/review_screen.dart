@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../../core/engine/engine_service.dart';
+import '../../core/l10n/labels.dart';
 import '../../core/theme/app_theme.dart';
 import '../../core/theme/move_classification.dart';
 import '../../core/theme/tokens.dart';
@@ -12,7 +13,9 @@ import '../../core/widgets/chunky_button.dart';
 import '../../core/widgets/classification_badge.dart';
 import '../../l10n/app_localizations.dart';
 import '../analysis/domain/game_analysis.dart';
+import '../analysis/domain/motifs.dart';
 import '../analysis/domain/position_key.dart';
+import '../games/data/game_repository.dart';
 import 'review_controller.dart';
 import 'widgets/eval_bar.dart';
 import 'widgets/eval_graph.dart';
@@ -38,6 +41,17 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
   String? _retryFen;
   String? _retryFeedback;
   bool _retrySolved = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // Show the board from the user's side when we know which one it was.
+    ref.read(gameRepositoryProvider).userSide(widget.gameId).then((side) {
+      if (mounted && side == 'black') {
+        setState(() => _orientation = Side.black);
+      }
+    });
+  }
 
   @override
   void dispose() {
@@ -166,10 +180,27 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
           ),
           if (state.status == ReviewStatus.ready)
             PopupMenuButton<String>(
-              onSelected: (v) {
-                if (v == 'reanalyze') _ctrl.analyze();
+              onSelected: (v) async {
+                if (v == 'reanalyze') {
+                  await _ctrl.analyze();
+                } else {
+                  // Tell the app which player the user was, so this game
+                  // counts in the report and its mistakes become puzzles.
+                  await ref
+                      .read(gameRepositoryProvider)
+                      .setUserSide(widget.gameId, v);
+                  if (mounted) {
+                    setState(
+                      () =>
+                          _orientation = v == 'white' ? Side.white : Side.black,
+                    );
+                  }
+                }
               },
               itemBuilder: (_) => [
+                PopupMenuItem(value: 'white', child: Text(l10n.iPlayedWhite)),
+                PopupMenuItem(value: 'black', child: Text(l10n.iPlayedBlack)),
+                const PopupMenuDivider(),
                 PopupMenuItem(value: 'reanalyze', child: Text(l10n.reanalyze)),
               ],
             ),
@@ -296,7 +327,19 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
           onBack: _exitRetry,
         )
       else if (analysis != null && current != null)
-        _MoveInfoCard(move: current, onRetry: () => _startRetry(current))
+        _MoveInfoCard(
+          move: current,
+          explanations: l10n.explain(
+            current,
+            hungPiece: current.motifs.contains(Motif.hungPiece)
+                ? hungPieceRole(
+                    game.plies[current.ply].fenAfter,
+                    analysis.moves.elementAtOrNull(current.ply + 1)?.bestUci,
+                  )
+                : null,
+          ),
+          onRetry: () => _startRetry(current),
+        )
       else if (analysis != null)
         ReviewSummary(game: game, analysis: analysis),
       if (analysis != null)
@@ -475,9 +518,16 @@ class _ErrorCard extends StatelessWidget {
 }
 
 class _MoveInfoCard extends StatelessWidget {
-  const _MoveInfoCard({required this.move, required this.onRetry});
+  const _MoveInfoCard({
+    required this.move,
+    required this.onRetry,
+    this.explanations = const [],
+  });
   final MoveAnalysis move;
   final VoidCallback onRetry;
+
+  /// Plain-words reasons the move was an error.
+  final List<String> explanations;
 
   @override
   Widget build(BuildContext context) {
@@ -512,6 +562,22 @@ class _MoveInfoCard extends StatelessWidget {
                 ),
               ],
             ),
+            for (final line in explanations)
+              Padding(
+                padding: const EdgeInsets.only(top: EcSpace.sm),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Icon(
+                      Icons.lightbulb_rounded,
+                      size: 18,
+                      color: context.palette.sun,
+                    ),
+                    const SizedBox(width: EcSpace.sm),
+                    Expanded(child: Text(line, style: text.bodyMedium)),
+                  ],
+                ),
+              ),
             if (showBest) ...[
               const SizedBox(height: EcSpace.sm),
               Text(l10n.bestWas(move.bestSan!), style: text.bodyLarge),

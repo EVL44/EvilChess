@@ -183,5 +183,244 @@
         "type": "int"
       }
     }
-  }
+  },
+  "analyzeAll": "Analyze all ({count})",
+  "@analyzeAll": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "analyzingGames": "Analyzing game {done} of {total}…",
+  "@analyzingGames": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "stop": "Stop",
+  "iPlayedWhite": "I played White",
+  "iPlayedBlack": "I played Black",
+  "myReport": "My report",
+  "myReportBody": "Your strengths, your weaknesses and what to train next.",
+  "reportEmptyTitle": "No report yet",
+  "reportEmptyBody": "Analyze a few of your games and tell evilchess which player you are: link your Lichess or Chess.com account, or pick your colour inside a game.",
+  "reportGamesWithoutSide": "{count, plural, =1{1 analyzed game has no colour set for you and is not counted.} other{{count} analyzed games have no colour set for you and are not counted.}}",
+  "@reportGamesWithoutSide": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gamesAnalyzedCount": "{count, plural, =1{1 game analyzed} other{{count} games analyzed}}",
+  "@gamesAnalyzedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "averageAccuracy": "Average accuracy",
+  "accuracyOverTime": "Accuracy over time",
+  "accuracyByPhase": "Accuracy by phase",
+  "phaseOpening": "Opening",
+  "phaseMiddlegame": "Middlegame",
+  "phaseEndgame": "Endgame",
+  "whiteVsBlack": "White vs Black",
+  "asWhite": "As White",
+  "asBlack": "As Black",
+  "scorePercent": "Score {percent}%",
+  "@scorePercent": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "gamesCount": "{count, plural, =1{1 game} other{{count} games}}",
+  "@gamesCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "byTimeControl": "By time control",
+  "speedUltraBullet": "UltraBullet",
+  "speedBullet": "Bullet",
+  "speedBlitz": "Blitz",
+  "speedRapid": "Rapid",
+  "speedClassical": "Classical",
+  "speedCorrespondence": "Daily",
+  "speedOther": "Other",
+  "vulnerabilitiesTitle": "Where your mistakes come from",
+  "catMate": "Walking into mate",
+  "catHungMaterial": "Hanging material",
+  "catMissedTactic": "Missed tactics",
+  "catOpening": "Opening errors",
+  "catEndgame": "Endgame technique",
+  "catPositional": "Positional slips",
+  "mistakesCount": "{count, plural, =1{1 mistake} other{{count} mistakes}}",
+  "@mistakesCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "timeTroubleStat": "{count, plural, =1{1 of your mistakes happened in time trouble.} other{{count} of your mistakes happened in time trouble.}}",
+  "@timeTroubleStat": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "tacticsTitle": "Tactics you find and miss",
+  "themeFork": "Forks",
+  "themePin": "Pins",
+  "themeSkewer": "Skewers",
+  "themeDiscoveredAttack": "Discovered attacks",
+  "themeMate": "Checkmates",
+  "themeBackRankMate": "Back-rank mates",
+  "foundOfTotal": "{found} of {total} found",
+  "@foundOfTotal": {
+    "placeholders": {
+      "found": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "errorsByPieceTitle": "Mistakes by piece",
+  "piecePawn": "Pawn",
+  "pieceKnight": "Knight",
+  "pieceBishop": "Bishop",
+  "pieceRook": "Rook",
+  "pieceQueen": "Queen",
+  "pieceKing": "King",
+  "openingsTitle": "Your openings",
+  "focusTitle": "3 things to work on this week",
+  "focusCategory": "{category}: {count} this period",
+  "@focusCategory": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "focusTactic": "{theme}: you find only {percent}% of them",
+  "@focusTactic": {
+    "placeholders": {
+      "theme": {
+        "type": "String"
+      },
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "focusPhase": "{phase} is your weakest phase ({percent}% accuracy)",
+  "@focusPhase": {
+    "placeholders": {
+      "phase": {
+        "type": "String"
+      },
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "focusTimeTrouble": "Time trouble: {count} mistakes on a low clock",
+  "@focusTimeTrouble": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "practice": "Practice",
+  "explainHungPiece": "This leaves your {piece} hanging — it can simply be taken.",
+  "@explainHungPiece": {
+    "placeholders": {
+      "piece": {
+        "type": "String"
+      }
+    }
+  },
+  "explainHungPieceGeneric": "This leaves a piece hanging — it can simply be taken.",
+  "explainBadTrade": "This exchange loses material.",
+  "explainMissedFork": "You missed a fork: one move attacking two things at once.",
+  "explainMissedPin": "You missed a pin: a piece that could not move without losing something bigger.",
+  "explainMissedSkewer": "You missed a skewer: attack the big piece and win the one behind it.",
+  "explainMissedDiscoveredAttack": "You missed a discovered attack: moving one piece opens fire from another.",
+  "explainMissedMate": "You missed a forced checkmate.",
+  "explainWalkedIntoMate": "This allows a forced checkmate.",
+  "explainBackRankMate": "Watch the back rank: the king has no escape square.",
+  "explainTimeTrouble": "You were low on time here.",
+  "puzzlesFromMistakes": "From my mistakes",
+  "puzzlesFromMistakesBody": "Positions from your own games where you went wrong. Find the better move.",
+  "puzzleProgress": "{solved} of {total} solved",
+  "@puzzleProgress": {
+    "placeholders": {
+      "solved": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "startPuzzles": "Start",
+  "puzzlesEmptyTitle": "No puzzles yet",
+  "puzzlesEmptyBody": "Analyze some games first — every mistake becomes a puzzle.",
+  "puzzleFindBetter": "You played {move}. Find a better move for {side}.",
+  "@puzzleFindBetter": {
+    "placeholders": {
+      "move": {
+        "type": "String"
+      },
+      "side": {
+        "type": "String"
+      }
+    }
+  },
+  "puzzleSolved": "Solved!",
+  "puzzleNext": "Next puzzle",
+  "puzzleOpenGame": "Open the game",
+  "puzzleStreak": "Streak: {count}",
+  "@puzzleStreak": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "puzzleAllDone": "That's all of them for now. Nice work!",
+  "puzzleThemesTitle": "Train a weakness",
+  "puzzleCounter": "{index} / {total}",
+  "@puzzleCounter": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "otherModesSoon": "Rated puzzles, Puzzle Rush and the daily puzzle arrive with accounts.",
+  "allMistakes": "All my mistakes",
+  "timeTroubleLabel": "Time trouble"
 }

@@ -674,6 +674,540 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{added, plural, =0{No new games} =1{1 new game imported} other{{added} new games imported}}'**
   String importResult(int added);
+
+  /// No description provided for @analyzeAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Analyze all ({count})'**
+  String analyzeAll(int count);
+
+  /// No description provided for @analyzingGames.
+  ///
+  /// In en, this message translates to:
+  /// **'Analyzing game {done} of {total}…'**
+  String analyzingGames(int done, int total);
+
+  /// No description provided for @stop.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop'**
+  String get stop;
+
+  /// No description provided for @iPlayedWhite.
+  ///
+  /// In en, this message translates to:
+  /// **'I played White'**
+  String get iPlayedWhite;
+
+  /// No description provided for @iPlayedBlack.
+  ///
+  /// In en, this message translates to:
+  /// **'I played Black'**
+  String get iPlayedBlack;
+
+  /// No description provided for @myReport.
+  ///
+  /// In en, this message translates to:
+  /// **'My report'**
+  String get myReport;
+
+  /// No description provided for @myReportBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your strengths, your weaknesses and what to train next.'**
+  String get myReportBody;
+
+  /// No description provided for @reportEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No report yet'**
+  String get reportEmptyTitle;
+
+  /// No description provided for @reportEmptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Analyze a few of your games and tell evilchess which player you are: link your Lichess or Chess.com account, or pick your colour inside a game.'**
+  String get reportEmptyBody;
+
+  /// No description provided for @reportGamesWithoutSide.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 analyzed game has no colour set for you and is not counted.} other{{count} analyzed games have no colour set for you and are not counted.}}'**
+  String reportGamesWithoutSide(int count);
+
+  /// No description provided for @gamesAnalyzedCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 game analyzed} other{{count} games analyzed}}'**
+  String gamesAnalyzedCount(int count);
+
+  /// No description provided for @averageAccuracy.
+  ///
+  /// In en, this message translates to:
+  /// **'Average accuracy'**
+  String get averageAccuracy;
+
+  /// No description provided for @accuracyOverTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Accuracy over time'**
+  String get accuracyOverTime;
+
+  /// No description provided for @accuracyByPhase.
+  ///
+  /// In en, this message translates to:
+  /// **'Accuracy by phase'**
+  String get accuracyByPhase;
+
+  /// No description provided for @phaseOpening.
+  ///
+  /// In en, this message translates to:
+  /// **'Opening'**
+  String get phaseOpening;
+
+  /// No description provided for @phaseMiddlegame.
+  ///
+  /// In en, this message translates to:
+  /// **'Middlegame'**
+  String get phaseMiddlegame;
+
+  /// No description provided for @phaseEndgame.
+  ///
+  /// In en, this message translates to:
+  /// **'Endgame'**
+  String get phaseEndgame;
+
+  /// No description provided for @whiteVsBlack.
+  ///
+  /// In en, this message translates to:
+  /// **'White vs Black'**
+  String get whiteVsBlack;
+
+  /// No description provided for @asWhite.
+  ///
+  /// In en, this message translates to:
+  /// **'As White'**
+  String get asWhite;
+
+  /// No description provided for @asBlack.
+  ///
+  /// In en, this message translates to:
+  /// **'As Black'**
+  String get asBlack;
+
+  /// No description provided for @scorePercent.
+  ///
+  /// In en, this message translates to:
+  /// **'Score {percent}%'**
+  String scorePercent(int percent);
+
+  /// No description provided for @gamesCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 game} other{{count} games}}'**
+  String gamesCount(int count);
+
+  /// No description provided for @byTimeControl.
+  ///
+  /// In en, this message translates to:
+  /// **'By time control'**
+  String get byTimeControl;
+
+  /// No description provided for @speedUltraBullet.
+  ///
+  /// In en, this message translates to:
+  /// **'UltraBullet'**
+  String get speedUltraBullet;
+
+  /// No description provided for @speedBullet.
+  ///
+  /// In en, this message translates to:
+  /// **'Bullet'**
+  String get speedBullet;
+
+  /// No description provided for @speedBlitz.
+  ///
+  /// In en, this message translates to:
+  /// **'Blitz'**
+  String get speedBlitz;
+
+  /// No description provided for @speedRapid.
+  ///
+  /// In en, this message translates to:
+  /// **'Rapid'**
+  String get speedRapid;
+
+  /// No description provided for @speedClassical.
+  ///
+  /// In en, this message translates to:
+  /// **'Classical'**
+  String get speedClassical;
+
+  /// No description provided for @speedCorrespondence.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily'**
+  String get speedCorrespondence;
+
+  /// No description provided for @speedOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get speedOther;
+
+  /// No description provided for @vulnerabilitiesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Where your mistakes come from'**
+  String get vulnerabilitiesTitle;
+
+  /// No description provided for @catMate.
+  ///
+  /// In en, this message translates to:
+  /// **'Walking into mate'**
+  String get catMate;
+
+  /// No description provided for @catHungMaterial.
+  ///
+  /// In en, this message translates to:
+  /// **'Hanging material'**
+  String get catHungMaterial;
+
+  /// No description provided for @catMissedTactic.
+  ///
+  /// In en, this message translates to:
+  /// **'Missed tactics'**
+  String get catMissedTactic;
+
+  /// No description provided for @catOpening.
+  ///
+  /// In en, this message translates to:
+  /// **'Opening errors'**
+  String get catOpening;
+
+  /// No description provided for @catEndgame.
+  ///
+  /// In en, this message translates to:
+  /// **'Endgame technique'**
+  String get catEndgame;
+
+  /// No description provided for @catPositional.
+  ///
+  /// In en, this message translates to:
+  /// **'Positional slips'**
+  String get catPositional;
+
+  /// No description provided for @mistakesCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 mistake} other{{count} mistakes}}'**
+  String mistakesCount(int count);
+
+  /// No description provided for @timeTroubleStat.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 of your mistakes happened in time trouble.} other{{count} of your mistakes happened in time trouble.}}'**
+  String timeTroubleStat(int count);
+
+  /// No description provided for @tacticsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Tactics you find and miss'**
+  String get tacticsTitle;
+
+  /// No description provided for @themeFork.
+  ///
+  /// In en, this message translates to:
+  /// **'Forks'**
+  String get themeFork;
+
+  /// No description provided for @themePin.
+  ///
+  /// In en, this message translates to:
+  /// **'Pins'**
+  String get themePin;
+
+  /// No description provided for @themeSkewer.
+  ///
+  /// In en, this message translates to:
+  /// **'Skewers'**
+  String get themeSkewer;
+
+  /// No description provided for @themeDiscoveredAttack.
+  ///
+  /// In en, this message translates to:
+  /// **'Discovered attacks'**
+  String get themeDiscoveredAttack;
+
+  /// No description provided for @themeMate.
+  ///
+  /// In en, this message translates to:
+  /// **'Checkmates'**
+  String get themeMate;
+
+  /// No description provided for @themeBackRankMate.
+  ///
+  /// In en, this message translates to:
+  /// **'Back-rank mates'**
+  String get themeBackRankMate;
+
+  /// No description provided for @foundOfTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'{found} of {total} found'**
+  String foundOfTotal(int found, int total);
+
+  /// No description provided for @errorsByPieceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Mistakes by piece'**
+  String get errorsByPieceTitle;
+
+  /// No description provided for @piecePawn.
+  ///
+  /// In en, this message translates to:
+  /// **'Pawn'**
+  String get piecePawn;
+
+  /// No description provided for @pieceKnight.
+  ///
+  /// In en, this message translates to:
+  /// **'Knight'**
+  String get pieceKnight;
+
+  /// No description provided for @pieceBishop.
+  ///
+  /// In en, this message translates to:
+  /// **'Bishop'**
+  String get pieceBishop;
+
+  /// No description provided for @pieceRook.
+  ///
+  /// In en, this message translates to:
+  /// **'Rook'**
+  String get pieceRook;
+
+  /// No description provided for @pieceQueen.
+  ///
+  /// In en, this message translates to:
+  /// **'Queen'**
+  String get pieceQueen;
+
+  /// No description provided for @pieceKing.
+  ///
+  /// In en, this message translates to:
+  /// **'King'**
+  String get pieceKing;
+
+  /// No description provided for @openingsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your openings'**
+  String get openingsTitle;
+
+  /// No description provided for @focusTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'3 things to work on this week'**
+  String get focusTitle;
+
+  /// No description provided for @focusCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'{category}: {count} this period'**
+  String focusCategory(String category, int count);
+
+  /// No description provided for @focusTactic.
+  ///
+  /// In en, this message translates to:
+  /// **'{theme}: you find only {percent}% of them'**
+  String focusTactic(String theme, int percent);
+
+  /// No description provided for @focusPhase.
+  ///
+  /// In en, this message translates to:
+  /// **'{phase} is your weakest phase ({percent}% accuracy)'**
+  String focusPhase(String phase, int percent);
+
+  /// No description provided for @focusTimeTrouble.
+  ///
+  /// In en, this message translates to:
+  /// **'Time trouble: {count} mistakes on a low clock'**
+  String focusTimeTrouble(int count);
+
+  /// No description provided for @practice.
+  ///
+  /// In en, this message translates to:
+  /// **'Practice'**
+  String get practice;
+
+  /// No description provided for @explainHungPiece.
+  ///
+  /// In en, this message translates to:
+  /// **'This leaves your {piece} hanging — it can simply be taken.'**
+  String explainHungPiece(String piece);
+
+  /// No description provided for @explainHungPieceGeneric.
+  ///
+  /// In en, this message translates to:
+  /// **'This leaves a piece hanging — it can simply be taken.'**
+  String get explainHungPieceGeneric;
+
+  /// No description provided for @explainBadTrade.
+  ///
+  /// In en, this message translates to:
+  /// **'This exchange loses material.'**
+  String get explainBadTrade;
+
+  /// No description provided for @explainMissedFork.
+  ///
+  /// In en, this message translates to:
+  /// **'You missed a fork: one move attacking two things at once.'**
+  String get explainMissedFork;
+
+  /// No description provided for @explainMissedPin.
+  ///
+  /// In en, this message translates to:
+  /// **'You missed a pin: a piece that could not move without losing something bigger.'**
+  String get explainMissedPin;
+
+  /// No description provided for @explainMissedSkewer.
+  ///
+  /// In en, this message translates to:
+  /// **'You missed a skewer: attack the big piece and win the one behind it.'**
+  String get explainMissedSkewer;
+
+  /// No description provided for @explainMissedDiscoveredAttack.
+  ///
+  /// In en, this message translates to:
+  /// **'You missed a discovered attack: moving one piece opens fire from another.'**
+  String get explainMissedDiscoveredAttack;
+
+  /// No description provided for @explainMissedMate.
+  ///
+  /// In en, this message translates to:
+  /// **'You missed a forced checkmate.'**
+  String get explainMissedMate;
+
+  /// No description provided for @explainWalkedIntoMate.
+  ///
+  /// In en, this message translates to:
+  /// **'This allows a forced checkmate.'**
+  String get explainWalkedIntoMate;
+
+  /// No description provided for @explainBackRankMate.
+  ///
+  /// In en, this message translates to:
+  /// **'Watch the back rank: the king has no escape square.'**
+  String get explainBackRankMate;
+
+  /// No description provided for @explainTimeTrouble.
+  ///
+  /// In en, this message translates to:
+  /// **'You were low on time here.'**
+  String get explainTimeTrouble;
+
+  /// No description provided for @puzzlesFromMistakes.
+  ///
+  /// In en, this message translates to:
+  /// **'From my mistakes'**
+  String get puzzlesFromMistakes;
+
+  /// No description provided for @puzzlesFromMistakesBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Positions from your own games where you went wrong. Find the better move.'**
+  String get puzzlesFromMistakesBody;
+
+  /// No description provided for @puzzleProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'{solved} of {total} solved'**
+  String puzzleProgress(int solved, int total);
+
+  /// No description provided for @startPuzzles.
+  ///
+  /// In en, this message translates to:
+  /// **'Start'**
+  String get startPuzzles;
+
+  /// No description provided for @puzzlesEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No puzzles yet'**
+  String get puzzlesEmptyTitle;
+
+  /// No description provided for @puzzlesEmptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Analyze some games first — every mistake becomes a puzzle.'**
+  String get puzzlesEmptyBody;
+
+  /// No description provided for @puzzleFindBetter.
+  ///
+  /// In en, this message translates to:
+  /// **'You played {move}. Find a better move for {side}.'**
+  String puzzleFindBetter(String move, String side);
+
+  /// No description provided for @puzzleSolved.
+  ///
+  /// In en, this message translates to:
+  /// **'Solved!'**
+  String get puzzleSolved;
+
+  /// No description provided for @puzzleNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next puzzle'**
+  String get puzzleNext;
+
+  /// No description provided for @puzzleOpenGame.
+  ///
+  /// In en, this message translates to:
+  /// **'Open the game'**
+  String get puzzleOpenGame;
+
+  /// No description provided for @puzzleStreak.
+  ///
+  /// In en, this message translates to:
+  /// **'Streak: {count}'**
+  String puzzleStreak(int count);
+
+  /// No description provided for @puzzleAllDone.
+  ///
+  /// In en, this message translates to:
+  /// **'That\'s all of them for now. Nice work!'**
+  String get puzzleAllDone;
+
+  /// No description provided for @puzzleThemesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Train a weakness'**
+  String get puzzleThemesTitle;
+
+  /// No description provided for @puzzleCounter.
+  ///
+  /// In en, this message translates to:
+  /// **'{index} / {total}'**
+  String puzzleCounter(int index, int total);
+
+  /// No description provided for @otherModesSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Rated puzzles, Puzzle Rush and the daily puzzle arrive with accounts.'**
+  String get otherModesSoon;
+
+  /// No description provided for @allMistakes.
+  ///
+  /// In en, this message translates to:
+  /// **'All my mistakes'**
+  String get allMistakes;
+
+  /// No description provided for @timeTroubleLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Time trouble'**
+  String get timeTroubleLabel;
 }
 
 class _AppLocalizationsDelegate

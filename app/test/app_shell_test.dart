@@ -30,14 +30,14 @@ void main() {
     await tester.tap(
       find.descendant(
         of: find.byType(NavigationBar),
-        matching: find.text('Puzzles'),
+        matching: find.text('Play'),
       ),
     );
     await tester.pumpAndSettle();
 
     expect(find.text('Coming soon'), findsOneWidget);
     expect(
-      find.descendant(of: find.byType(AppBar), matching: find.text('Puzzles')),
+      find.descendant(of: find.byType(AppBar), matching: find.text('Play')),
       findsOneWidget,
     );
   });

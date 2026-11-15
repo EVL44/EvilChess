@@ -332,4 +332,349 @@ class AppLocalizationsEn extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String analyzeAll(int count) {
+    return 'Analyze all ($count)';
+  }
+
+  @override
+  String analyzingGames(int done, int total) {
+    return 'Analyzing game $done of $total…';
+  }
+
+  @override
+  String get stop => 'Stop';
+
+  @override
+  String get iPlayedWhite => 'I played White';
+
+  @override
+  String get iPlayedBlack => 'I played Black';
+
+  @override
+  String get myReport => 'My report';
+
+  @override
+  String get myReportBody =>
+      'Your strengths, your weaknesses and what to train next.';
+
+  @override
+  String get reportEmptyTitle => 'No report yet';
+
+  @override
+  String get reportEmptyBody =>
+      'Analyze a few of your games and tell evilchess which player you are: link your Lichess or Chess.com account, or pick your colour inside a game.';
+
+  @override
+  String reportGamesWithoutSide(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count analyzed games have no colour set for you and are not counted.',
+      one: '1 analyzed game has no colour set for you and is not counted.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String gamesAnalyzedCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count games analyzed',
+      one: '1 game analyzed',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get averageAccuracy => 'Average accuracy';
+
+  @override
+  String get accuracyOverTime => 'Accuracy over time';
+
+  @override
+  String get accuracyByPhase => 'Accuracy by phase';
+
+  @override
+  String get phaseOpening => 'Opening';
+
+  @override
+  String get phaseMiddlegame => 'Middlegame';
+
+  @override
+  String get phaseEndgame => 'Endgame';
+
+  @override
+  String get whiteVsBlack => 'White vs Black';
+
+  @override
+  String get asWhite => 'As White';
+
+  @override
+  String get asBlack => 'As Black';
+
+  @override
+  String scorePercent(int percent) {
+    return 'Score $percent%';
+  }
+
+  @override
+  String gamesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count games',
+      one: '1 game',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get byTimeControl => 'By time control';
+
+  @override
+  String get speedUltraBullet => 'UltraBullet';
+
+  @override
+  String get speedBullet => 'Bullet';
+
+  @override
+  String get speedBlitz => 'Blitz';
+
+  @override
+  String get speedRapid => 'Rapid';
+
+  @override
+  String get speedClassical => 'Classical';
+
+  @override
+  String get speedCorrespondence => 'Daily';
+
+  @override
+  String get speedOther => 'Other';
+
+  @override
+  String get vulnerabilitiesTitle => 'Where your mistakes come from';
+
+  @override
+  String get catMate => 'Walking into mate';
+
+  @override
+  String get catHungMaterial => 'Hanging material';
+
+  @override
+  String get catMissedTactic => 'Missed tactics';
+
+  @override
+  String get catOpening => 'Opening errors';
+
+  @override
+  String get catEndgame => 'Endgame technique';
+
+  @override
+  String get catPositional => 'Positional slips';
+
+  @override
+  String mistakesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count mistakes',
+      one: '1 mistake',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String timeTroubleStat(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count of your mistakes happened in time trouble.',
+      one: '1 of your mistakes happened in time trouble.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get tacticsTitle => 'Tactics you find and miss';
+
+  @override
+  String get themeFork => 'Forks';
+
+  @override
+  String get themePin => 'Pins';
+
+  @override
+  String get themeSkewer => 'Skewers';
+
+  @override
+  String get themeDiscoveredAttack => 'Discovered attacks';
+
+  @override
+  String get themeMate => 'Checkmates';
+
+  @override
+  String get themeBackRankMate => 'Back-rank mates';
+
+  @override
+  String foundOfTotal(int found, int total) {
+    return '$found of $total found';
+  }
+
+  @override
+  String get errorsByPieceTitle => 'Mistakes by piece';
+
+  @override
+  String get piecePawn => 'Pawn';
+
+  @override
+  String get pieceKnight => 'Knight';
+
+  @override
+  String get pieceBishop => 'Bishop';
+
+  @override
+  String get pieceRook => 'Rook';
+
+  @override
+  String get pieceQueen => 'Queen';
+
+  @override
+  String get pieceKing => 'King';
+
+  @override
+  String get openingsTitle => 'Your openings';
+
+  @override
+  String get focusTitle => '3 things to work on this week';
+
+  @override
+  String focusCategory(String category, int count) {
+    return '$category: $count this period';
+  }
+
+  @override
+  String focusTactic(String theme, int percent) {
+    return '$theme: you find only $percent% of them';
+  }
+
+  @override
+  String focusPhase(String phase, int percent) {
+    return '$phase is your weakest phase ($percent% accuracy)';
+  }
+
+  @override
+  String focusTimeTrouble(int count) {
+    return 'Time trouble: $count mistakes on a low clock';
+  }
+
+  @override
+  String get practice => 'Practice';
+
+  @override
+  String explainHungPiece(String piece) {
+    return 'This leaves your $piece hanging — it can simply be taken.';
+  }
+
+  @override
+  String get explainHungPieceGeneric =>
+      'This leaves a piece hanging — it can simply be taken.';
+
+  @override
+  String get explainBadTrade => 'This exchange loses material.';
+
+  @override
+  String get explainMissedFork =>
+      'You missed a fork: one move attacking two things at once.';
+
+  @override
+  String get explainMissedPin =>
+      'You missed a pin: a piece that could not move without losing something bigger.';
+
+  @override
+  String get explainMissedSkewer =>
+      'You missed a skewer: attack the big piece and win the one behind it.';
+
+  @override
+  String get explainMissedDiscoveredAttack =>
+      'You missed a discovered attack: moving one piece opens fire from another.';
+
+  @override
+  String get explainMissedMate => 'You missed a forced checkmate.';
+
+  @override
+  String get explainWalkedIntoMate => 'This allows a forced checkmate.';
+
+  @override
+  String get explainBackRankMate =>
+      'Watch the back rank: the king has no escape square.';
+
+  @override
+  String get explainTimeTrouble => 'You were low on time here.';
+
+  @override
+  String get puzzlesFromMistakes => 'From my mistakes';
+
+  @override
+  String get puzzlesFromMistakesBody =>
+      'Positions from your own games where you went wrong. Find the better move.';
+
+  @override
+  String puzzleProgress(int solved, int total) {
+    return '$solved of $total solved';
+  }
+
+  @override
+  String get startPuzzles => 'Start';
+
+  @override
+  String get puzzlesEmptyTitle => 'No puzzles yet';
+
+  @override
+  String get puzzlesEmptyBody =>
+      'Analyze some games first — every mistake becomes a puzzle.';
+
+  @override
+  String puzzleFindBetter(String move, String side) {
+    return 'You played $move. Find a better move for $side.';
+  }
+
+  @override
+  String get puzzleSolved => 'Solved!';
+
+  @override
+  String get puzzleNext => 'Next puzzle';
+
+  @override
+  String get puzzleOpenGame => 'Open the game';
+
+  @override
+  String puzzleStreak(int count) {
+    return 'Streak: $count';
+  }
+
+  @override
+  String get puzzleAllDone => 'That\'s all of them for now. Nice work!';
+
+  @override
+  String get puzzleThemesTitle => 'Train a weakness';
+
+  @override
+  String puzzleCounter(int index, int total) {
+    return '$index / $total';
+  }
+
+  @override
+  String get otherModesSoon =>
+      'Rated puzzles, Puzzle Rush and the daily puzzle arrive with accounts.';
+
+  @override
+  String get allMistakes => 'All my mistakes';
+
+  @override
+  String get timeTroubleLabel => 'Time trouble';
 }

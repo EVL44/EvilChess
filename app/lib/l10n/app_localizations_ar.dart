@@ -333,4 +333,358 @@ class AppLocalizationsAr extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String analyzeAll(int count) {
+    return 'تحليل الكل ($count)';
+  }
+
+  @override
+  String analyzingGames(int done, int total) {
+    return 'جارٍ تحليل المباراة $done من $total…';
+  }
+
+  @override
+  String get stop => 'إيقاف';
+
+  @override
+  String get iPlayedWhite => 'لعبتُ بالأبيض';
+
+  @override
+  String get iPlayedBlack => 'لعبتُ بالأسود';
+
+  @override
+  String get myReport => 'تقريري';
+
+  @override
+  String get myReportBody => 'نقاط قوتك وضعفك وما عليك تدريبه لاحقًا.';
+
+  @override
+  String get reportEmptyTitle => 'لا يوجد تقرير بعد';
+
+  @override
+  String get reportEmptyBody =>
+      'حلّل بعض مبارياتك وأخبر evilchess أيّ لاعب أنت: اربط حسابك على Lichess أو Chess.com، أو اختر لونك داخل المباراة.';
+
+  @override
+  String reportGamesWithoutSide(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count مباراة محلّلة لم يُحدَّد لونك فيها ولا تُحتسب.',
+      many: '$count مباراة محلّلة لم يُحدَّد لونك فيها ولا تُحتسب.',
+      few: '$count مباريات محلّلة لم يُحدَّد لونك فيها ولا تُحتسب.',
+      two: 'مباراتان محلّلتان لم يُحدَّد لونك فيهما ولا تُحتسبان.',
+      one: 'مباراة محلّلة واحدة لم يُحدَّد لونك فيها ولا تُحتسب.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String gamesAnalyzedCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count مباراة محلّلة',
+      many: '$count مباراة محلّلة',
+      few: '$count مباريات محلّلة',
+      two: 'مباراتان محلّلتان',
+      one: 'مباراة محلّلة واحدة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get averageAccuracy => 'متوسط الدقة';
+
+  @override
+  String get accuracyOverTime => 'الدقة عبر الزمن';
+
+  @override
+  String get accuracyByPhase => 'الدقة حسب المرحلة';
+
+  @override
+  String get phaseOpening => 'الافتتاح';
+
+  @override
+  String get phaseMiddlegame => 'وسط المباراة';
+
+  @override
+  String get phaseEndgame => 'نهاية المباراة';
+
+  @override
+  String get whiteVsBlack => 'الأبيض والأسود';
+
+  @override
+  String get asWhite => 'بالأبيض';
+
+  @override
+  String get asBlack => 'بالأسود';
+
+  @override
+  String scorePercent(int percent) {
+    return 'النتيجة $percent٪';
+  }
+
+  @override
+  String gamesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count مباراة',
+      many: '$count مباراة',
+      few: '$count مباريات',
+      two: 'مباراتان',
+      one: 'مباراة واحدة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get byTimeControl => 'حسب التوقيت';
+
+  @override
+  String get speedUltraBullet => 'ألترا بوليت';
+
+  @override
+  String get speedBullet => 'بوليت';
+
+  @override
+  String get speedBlitz => 'بليتز';
+
+  @override
+  String get speedRapid => 'سريع';
+
+  @override
+  String get speedClassical => 'كلاسيكي';
+
+  @override
+  String get speedCorrespondence => 'يومي';
+
+  @override
+  String get speedOther => 'أخرى';
+
+  @override
+  String get vulnerabilitiesTitle => 'من أين تأتي أخطاؤك';
+
+  @override
+  String get catMate => 'الوقوع في كش مات';
+
+  @override
+  String get catHungMaterial => 'ترك القطع بلا حماية';
+
+  @override
+  String get catMissedTactic => 'تكتيكات ضائعة';
+
+  @override
+  String get catOpening => 'أخطاء الافتتاح';
+
+  @override
+  String get catEndgame => 'تقنية النهايات';
+
+  @override
+  String get catPositional => 'هفوات تموضعية';
+
+  @override
+  String mistakesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count خطأ',
+      many: '$count خطأً',
+      few: '$count أخطاء',
+      two: 'خطآن',
+      one: 'خطأ واحد',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String timeTroubleStat(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count من أخطائك وقعت تحت ضغط الوقت.',
+      many: '$count من أخطائك وقعت تحت ضغط الوقت.',
+      few: '$count من أخطائك وقعت تحت ضغط الوقت.',
+      two: 'خطآن من أخطائك وقعا تحت ضغط الوقت.',
+      one: 'خطأ واحد من أخطائك وقع تحت ضغط الوقت.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get tacticsTitle => 'التكتيكات التي تجدها والتي تفوتك';
+
+  @override
+  String get themeFork => 'الشوكات';
+
+  @override
+  String get themePin => 'التسميرات';
+
+  @override
+  String get themeSkewer => 'الأسياخ';
+
+  @override
+  String get themeDiscoveredAttack => 'الهجمات المكشوفة';
+
+  @override
+  String get themeMate => 'كش مات';
+
+  @override
+  String get themeBackRankMate => 'مات الصف الأخير';
+
+  @override
+  String foundOfTotal(int found, int total) {
+    return 'وُجد $found من $total';
+  }
+
+  @override
+  String get errorsByPieceTitle => 'الأخطاء حسب القطعة';
+
+  @override
+  String get piecePawn => 'بيدق';
+
+  @override
+  String get pieceKnight => 'حصان';
+
+  @override
+  String get pieceBishop => 'فيل';
+
+  @override
+  String get pieceRook => 'رخ';
+
+  @override
+  String get pieceQueen => 'وزير';
+
+  @override
+  String get pieceKing => 'ملك';
+
+  @override
+  String get openingsTitle => 'افتتاحاتك';
+
+  @override
+  String get focusTitle => '3 أشياء تعمل عليها هذا الأسبوع';
+
+  @override
+  String focusCategory(String category, int count) {
+    return '$category: $count في هذه الفترة';
+  }
+
+  @override
+  String focusTactic(String theme, int percent) {
+    return '$theme: تجد $percent٪ منها فقط';
+  }
+
+  @override
+  String focusPhase(String phase, int percent) {
+    return '$phase هي أضعف مراحلك (دقة $percent٪)';
+  }
+
+  @override
+  String focusTimeTrouble(int count) {
+    return 'ضغط الوقت: $count أخطاء والوقت قليل';
+  }
+
+  @override
+  String get practice => 'تدرّب';
+
+  @override
+  String explainHungPiece(String piece) {
+    return 'هذه النقلة تترك $piece بلا حماية ويمكن أخذه ببساطة.';
+  }
+
+  @override
+  String get explainHungPieceGeneric => 'هذه النقلة تترك قطعة بلا حماية.';
+
+  @override
+  String get explainBadTrade => 'هذا التبادل يخسر مادة.';
+
+  @override
+  String get explainMissedFork => 'فاتتك شوكة: نقلة تهاجم هدفين في آن واحد.';
+
+  @override
+  String get explainMissedPin =>
+      'فاتك تسمير: قطعة لا تستطيع التحرك دون خسارة ما هو أثمن.';
+
+  @override
+  String get explainMissedSkewer =>
+      'فاتك سيخ: هاجم القطعة الكبيرة واربح التي خلفها.';
+
+  @override
+  String get explainMissedDiscoveredAttack =>
+      'فاتك هجوم مكشوف: تحريك قطعة يفتح خط الهجوم لأخرى.';
+
+  @override
+  String get explainMissedMate => 'فاتك كش مات إجباري.';
+
+  @override
+  String get explainWalkedIntoMate => 'هذه النقلة تسمح بكش مات إجباري.';
+
+  @override
+  String get explainBackRankMate => 'انتبه للصف الأخير: الملك بلا مربع هروب.';
+
+  @override
+  String get explainTimeTrouble => 'كان وقتك قليلًا هنا.';
+
+  @override
+  String get puzzlesFromMistakes => 'من أخطائي';
+
+  @override
+  String get puzzlesFromMistakesBody =>
+      'وضعيات من مبارياتك أخطأت فيها. ابحث عن النقلة الأفضل.';
+
+  @override
+  String puzzleProgress(int solved, int total) {
+    return 'حُلّ $solved من $total';
+  }
+
+  @override
+  String get startPuzzles => 'ابدأ';
+
+  @override
+  String get puzzlesEmptyTitle => 'لا توجد ألغاز بعد';
+
+  @override
+  String get puzzlesEmptyBody => 'حلّل بعض المباريات أولًا: كل خطأ يصبح لغزًا.';
+
+  @override
+  String puzzleFindBetter(String move, String side) {
+    return 'لعبتَ $move. ابحث عن نقلة أفضل لصالح $side.';
+  }
+
+  @override
+  String get puzzleSolved => 'تم الحل!';
+
+  @override
+  String get puzzleNext => 'اللغز التالي';
+
+  @override
+  String get puzzleOpenGame => 'افتح المباراة';
+
+  @override
+  String puzzleStreak(int count) {
+    return 'السلسلة: $count';
+  }
+
+  @override
+  String get puzzleAllDone => 'هذا كل شيء الآن. أحسنت!';
+
+  @override
+  String get puzzleThemesTitle => 'درّب نقطة ضعف';
+
+  @override
+  String puzzleCounter(int index, int total) {
+    return '$index / $total';
+  }
+
+  @override
+  String get otherModesSoon =>
+      'الألغاز المصنّفة وPuzzle Rush واللغز اليومي ستأتي مع الحسابات.';
+
+  @override
+  String get allMistakes => 'كل أخطائي';
+
+  @override
+  String get timeTroubleLabel => 'ضغط الوقت';
 }

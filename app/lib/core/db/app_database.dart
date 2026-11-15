@@ -32,6 +32,10 @@ class Games extends Table {
   DateTimeColumn get importedAt => dateTime()();
   DateTimeColumn get analyzedAt => dateTime().nullable()();
   IntColumn get analysisDepth => integer().nullable()();
+
+  /// Version of the analysis rules the stored rows were produced with
+  /// (see `kAnalysisVersion`); older rows are upgraded without the engine.
+  IntColumn get analysisVersion => integer().withDefault(const Constant(0))();
   RealColumn get whiteAccuracy => real().nullable()();
   RealColumn get blackAccuracy => real().nullable()();
 
@@ -64,6 +68,32 @@ class MoveAnalyses extends Table {
   TextColumn get phase => text()();
   TextColumn get piece => text()();
   IntColumn get clockMs => integer().nullable()();
+
+  /// Position before the move (puzzles start from here).
+  TextColumn get fenBefore => text().nullable()();
+
+  /// Comma-separated `Motif` names explaining an error.
+  TextColumn get motifs => text().nullable()();
+
+  /// `TacticTheme` of the best move when it was found or clearly missed.
+  TextColumn get opportunity => text().nullable()();
+
+  /// `ErrorCategory` for inaccuracies and worse.
+  TextColumn get category => text().nullable()();
+
+  @override
+  Set<Column<Object>> get primaryKey => {gameId, ply};
+}
+
+/// Progress on puzzles made from the player's own mistakes.
+@DataClassName('PuzzleAttemptRow')
+class PuzzleAttempts extends Table {
+  TextColumn get gameId =>
+      text().references(Games, #id, onDelete: KeyAction.cascade)();
+  IntColumn get ply => integer()();
+  BoolColumn get solved => boolean()();
+  IntColumn get attempts => integer().withDefault(const Constant(1))();
+  DateTimeColumn get lastAttemptAt => dateTime()();
 
   @override
   Set<Column<Object>> get primaryKey => {gameId, ply};
@@ -100,17 +130,29 @@ class LinkedAccounts extends Table {
   Set<Column<Object>> get primaryKey => {provider};
 }
 
-@DriftDatabase(tables: [Games, MoveAnalyses, PositionEvals, LinkedAccounts])
+@DriftDatabase(
+  tables: [Games, MoveAnalyses, PositionEvals, LinkedAccounts, PuzzleAttempts],
+)
 class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? executor]) : super(executor ?? _openConnection());
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
     beforeOpen: (details) async {
       await customStatement('PRAGMA foreign_keys = ON');
+    },
+    onUpgrade: (m, from, to) async {
+      if (from < 2) {
+        await m.addColumn(games, games.analysisVersion);
+        await m.addColumn(moveAnalyses, moveAnalyses.fenBefore);
+        await m.addColumn(moveAnalyses, moveAnalyses.motifs);
+        await m.addColumn(moveAnalyses, moveAnalyses.opportunity);
+        await m.addColumn(moveAnalyses, moveAnalyses.category);
+        await m.createTable(puzzleAttempts);
+      }
     },
     onCreate: (m) async {
       await m.createAll();

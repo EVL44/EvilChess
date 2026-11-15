@@ -7,6 +7,7 @@ import 'accuracy.dart';
 import 'classification.dart';
 import 'evaluation.dart';
 import 'material.dart';
+import 'motifs.dart';
 import 'opening_book.dart';
 import 'position_key.dart';
 
@@ -77,6 +78,9 @@ class MoveAnalysis {
     this.bestSan,
     this.bestLineSan = const [],
     this.clock,
+    this.motifs = const [],
+    this.opportunity,
+    this.category,
   });
 
   /// 0-based half-move index.
@@ -102,6 +106,38 @@ class MoveAnalysis {
   /// Engine's principal line from the position before the move, in SAN.
   final List<String> bestLineSan;
   final Duration? clock;
+
+  /// Why the move was an error (see [annotateMotifs]).
+  final List<Motif> motifs;
+
+  /// Tactical theme of the best move here, when the player found it or
+  /// clearly missed it (used for per-theme find rates).
+  final TacticTheme? opportunity;
+
+  /// Error bucket; null for good moves.
+  final ErrorCategory? category;
+
+  MoveAnalysis withMotifs(MoveMotifs m) => MoveAnalysis(
+    ply: ply,
+    san: san,
+    uci: uci,
+    whiteMoved: whiteMoved,
+    classification: classification,
+    accuracy: accuracy,
+    winBefore: winBefore,
+    winAfter: winAfter,
+    evalBefore: evalBefore,
+    evalAfter: evalAfter,
+    phase: phase,
+    piece: piece,
+    bestUci: bestUci,
+    bestSan: bestSan,
+    bestLineSan: bestLineSan,
+    clock: clock,
+    motifs: m.motifs,
+    opportunity: m.opportunity,
+    category: m.category,
+  );
 
   double get winLoss => (winBefore - winAfter).clamp(0, 100).toDouble();
 
@@ -231,6 +267,11 @@ GameAnalysis analyzeGame(
   final firstTurnWhite =
       Chess.fromSetup(Setup.parseFen(game.initialFen)).turn == Side.white;
   final acc = gameAccuracy(whiteWins, whiteMovesFirst: firstTurnWhite);
+
+  final motifs = annotateMotifs(game, moves);
+  for (var i = 0; i < moves.length; i++) {
+    moves[i] = moves[i].withMotifs(motifs[i]);
+  }
 
   return GameAnalysis(
     moves: moves,

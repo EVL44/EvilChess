@@ -11,6 +11,7 @@ import '../../../core/theme/move_classification.dart';
 import '../../analysis/domain/evaluation.dart';
 import '../../analysis/domain/game_analysis.dart';
 import '../../analysis/domain/material.dart';
+import '../../analysis/domain/motifs.dart';
 import '../domain/game_record.dart';
 
 /// Lightweight row for the game library list.
@@ -66,6 +67,10 @@ class LinkedAccount {
   final DateTime? lastSyncedAt;
   final DateTime? newestGameAt;
 }
+
+/// Bump when classification / motif rules change so stored analyses are
+/// refreshed (without re-running the engine) by [GameRepository.upgradeAnalyses].
+const kAnalysisVersion = 2;
 
 class GameRepository {
   GameRepository(this._db);
@@ -195,10 +200,13 @@ class GameRepository {
 
   // ------------------------------------------------------------- analysis
 
+  /// Saves an analysis. [fenBefore] (one FEN per ply) lets puzzles start
+  /// from each position without re-reading the game.
   Future<void> saveAnalysis(
     String gameId,
     GameAnalysis analysis, {
     required int depth,
+    List<String>? fenBefore,
   }) => _db.transaction(() async {
     await (_db.delete(
       _db.moveAnalyses,
@@ -226,6 +234,12 @@ class GameRepository {
             phase: m.phase.name,
             piece: m.piece.name,
             clockMs: Value(m.clock?.inMilliseconds),
+            fenBefore: Value(fenBefore?.elementAtOrNull(m.ply)),
+            motifs: Value(
+              m.motifs.isEmpty ? null : m.motifs.map((x) => x.name).join(','),
+            ),
+            opportunity: Value(m.opportunity?.name),
+            category: Value(m.category?.name),
           ),
       ]);
     });
@@ -233,6 +247,7 @@ class GameRepository {
       GamesCompanion(
         analyzedAt: Value(DateTime.now()),
         analysisDepth: Value(depth),
+        analysisVersion: const Value(kAnalysisVersion),
         whiteAccuracy: Value(analysis.whiteAccuracy),
         blackAccuracy: Value(analysis.blackAccuracy),
         // Fill in the opening when the source PGN had none.
@@ -278,6 +293,16 @@ class GameRepository {
           bestSan: r.bestSan,
           bestLineSan: r.bestLine?.split(' ') ?? const [],
           clock: r.clockMs == null ? null : Duration(milliseconds: r.clockMs!),
+          motifs: [
+            for (final name in (r.motifs ?? '').split(','))
+              if (name.isNotEmpty) Motif.values.byName(name),
+          ],
+          opportunity: r.opportunity == null
+              ? null
+              : TacticTheme.values.byName(r.opportunity!),
+          category: r.category == null
+              ? null
+              : ErrorCategory.values.byName(r.category!),
         ),
     ];
     return GameAnalysis(
@@ -289,6 +314,73 @@ class GameRepository {
           ? null
           : (eco: game.eco!, name: game.opening!),
     );
+  }
+
+  /// Re-derives motifs for games analysed with older rules. Needs no engine:
+  /// everything is recomputed from the stored evals and best moves.
+  /// Returns how many games were upgraded.
+  Future<int> upgradeAnalyses() async {
+    final stale =
+        await (_db.select(_db.games)..where(
+              (t) =>
+                  t.analyzedAt.isNotNull() &
+                  t.analysisVersion.isSmallerThanValue(kAnalysisVersion),
+            ))
+            .get();
+    for (final row in stale) {
+      final game = await getGame(row.id);
+      final analysis = await loadAnalysis(row.id);
+      if (game == null ||
+          analysis == null ||
+          analysis.moves.length != game.plies.length) {
+        continue;
+      }
+      final motifs = annotateMotifs(game, analysis.moves);
+      final upgraded = GameAnalysis(
+        moves: [
+          for (var i = 0; i < analysis.moves.length; i++)
+            analysis.moves[i].withMotifs(motifs[i]),
+        ],
+        whiteAccuracy: analysis.whiteAccuracy,
+        blackAccuracy: analysis.blackAccuracy,
+        whiteEvals: analysis.whiteEvals,
+        opening: analysis.opening,
+      );
+      await saveAnalysis(
+        row.id,
+        upgraded,
+        depth: row.analysisDepth ?? 0,
+        fenBefore: [for (final p in game.plies) p.fenBefore],
+      );
+    }
+    return stale.length;
+  }
+
+  /// Marks which colour the user played in a game (null = unknown).
+  Future<void> setUserSide(String gameId, String? side) =>
+      (_db.update(_db.games)..where((t) => t.id.equals(gameId))).write(
+        GamesCompanion(userSide: Value(side)),
+      );
+
+  Future<String?> userSide(String gameId) async {
+    final r = await (_db.select(
+      _db.games,
+    )..where((t) => t.id.equals(gameId))).getSingleOrNull();
+    return r?.userSide;
+  }
+
+  /// Ids of games that have not been analysed yet, newest first.
+  Future<List<String>> unanalyzedGameIds() async {
+    final q = _db.selectOnly(_db.games)
+      ..addColumns([_db.games.id])
+      ..where(_db.games.analyzedAt.isNull())
+      ..orderBy([
+        OrderingTerm(
+          expression: coalesce([_db.games.playedAt, _db.games.importedAt]),
+          mode: OrderingMode.desc,
+        ),
+      ]);
+    return q.map((r) => r.read(_db.games.id)!).get();
   }
 
   // -------------------------------------------------------- position cache
