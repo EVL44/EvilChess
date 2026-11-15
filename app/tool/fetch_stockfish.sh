@@ -35,7 +35,11 @@ trap 'rm -rf "$tmp"' EXIT
 echo "Downloading $asset ($VERSION)..."
 curl -fsSL -o "$tmp/$asset" "$BASE/$asset"
 mkdir -p "$tmp/x"
-tar -xf "$tmp/$asset" -C "$tmp/x"
+# GNU tar (Git Bash on Windows) cannot read .zip archives, so use unzip there.
+case "$asset" in
+  *.zip) unzip -q "$tmp/$asset" -d "$tmp/x" ;;
+  *)     tar -xf "$tmp/$asset" -C "$tmp/x" ;;
+esac
 
 # The archive holds one engine binary named stockfish-<os>-...; pick it.
 bin="$(find "$tmp/x" -type f -name 'stockfish*' ! -name '*.txt' ! -name '*.md' | head -n1)"
