@@ -7,6 +7,7 @@ import '../../core/theme/app_theme.dart';
 import '../../core/theme/tokens.dart';
 import '../../core/widgets/chunky_button.dart';
 import '../../l10n/app_localizations.dart';
+import '../analysis/data/batch_analysis.dart';
 import '../games/data/game_repository.dart';
 import '../games/domain/game_record.dart';
 import '../games/ui/import_sheet.dart';
@@ -54,16 +55,140 @@ class AnalyzeScreen extends ConsumerWidget {
                   EcSpace.md,
                   96,
                 ),
-                itemCount: list.length,
+                itemCount: list.length + 1,
                 separatorBuilder: (_, _) => const SizedBox(height: EcSpace.sm),
-                itemBuilder: (context, i) => _GameCard(
-                  game: list[i],
-                  onTap: () => context.push(Routes.review(list[i].id)),
-                  onDelete: () =>
-                      ref.read(gameRepositoryProvider).deleteGame(list[i].id),
-                ),
+                itemBuilder: (context, i) {
+                  if (i == 0) {
+                    return _LibraryHeader(
+                      unanalyzed: list.where((g) => !g.analyzed).length,
+                    );
+                  }
+                  final game = list[i - 1];
+                  return _GameCard(
+                    game: game,
+                    onTap: () => context.push(Routes.review(game.id)),
+                    onDelete: () =>
+                        ref.read(gameRepositoryProvider).deleteGame(game.id),
+                  );
+                },
               ),
       ),
+    );
+  }
+}
+
+/// Top of the library: link to the report and "analyze everything".
+class _LibraryHeader extends ConsumerWidget {
+  const _LibraryHeader({required this.unanalyzed});
+
+  final int unanalyzed;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final text = Theme.of(context).textTheme;
+    final batch = ref.watch(batchAnalysisProvider);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Card(
+          clipBehavior: Clip.antiAlias,
+          child: InkWell(
+            key: const Key('open-report'),
+            onTap: () => context.push(Routes.report),
+            child: Padding(
+              padding: const EdgeInsets.all(EcSpace.md),
+              child: Row(
+                children: [
+                  Container(
+                    width: 48,
+                    height: 48,
+                    decoration: BoxDecoration(
+                      color: context.palette.hot.withValues(alpha: 0.16),
+                      borderRadius: BorderRadius.circular(EcRadii.md),
+                    ),
+                    child: Icon(
+                      Icons.query_stats_rounded,
+                      color: context.palette.hot,
+                    ),
+                  ),
+                  const SizedBox(width: EcSpace.md),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(l10n.myReport, style: text.titleMedium),
+                        Text(
+                          l10n.myReportBody,
+                          style: text.bodySmall?.copyWith(
+                            color: context.palette.inkMuted,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Icon(Icons.chevron_right_rounded),
+                ],
+              ),
+            ),
+          ),
+        ),
+        if (batch.running) ...[
+          const SizedBox(height: EcSpace.sm),
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(EcSpace.md),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          l10n.analyzingGames(
+                            (batch.done + 1).clamp(1, batch.total),
+                            batch.total,
+                          ),
+                          style: text.titleSmall,
+                        ),
+                        const SizedBox(height: EcSpace.sm),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(EcRadii.pill),
+                          child: LinearProgressIndicator(
+                            value: batch.total == 0
+                                ? null
+                                : batch.done / batch.total,
+                            minHeight: 8,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: EcSpace.sm),
+                  TextButton(
+                    onPressed: () =>
+                        ref.read(batchAnalysisProvider.notifier).stop(),
+                    child: Text(l10n.stop),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ] else if (unanalyzed > 0) ...[
+          const SizedBox(height: EcSpace.sm),
+          Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: ChunkyButton(
+              key: const Key('analyze-all'),
+              label: l10n.analyzeAll(unanalyzed),
+              icon: Icons.bolt_rounded,
+              color: context.palette.zap,
+              onPressed: () => ref.read(batchAnalysisProvider.notifier).start(),
+            ),
+          ),
+        ],
+      ],
     );
   }
 }

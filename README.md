@@ -19,7 +19,8 @@ Why the split licence: see [docs/adr/0001-licensing.md](docs/adr/0001-licensing.
 |---|---|---|
 | 0 | Monorepo, CI, design system, EN/FR/AR + RTL, app shell | ✅ done |
 | 1 | Offline analysis MVP (PGN + Lichess/Chess.com import, Stockfish, review screen) | ✅ done |
-| 2 | Reports + puzzles from my mistakes | next |
+| 2 | Reports + puzzles from my mistakes | ✅ done |
+| 3 | Bots | next |
 
 ## Prerequisites
 
@@ -75,6 +76,19 @@ Localizations are generated from `app/lib/l10n/*.arb` on `pub get` / build
 
 All of them sit behind one interface (`lib/core/engine/`): a `UciTransport` per platform and a
 shared `UciEngine`. Analysis results are cached per position in the local database.
+
+### How reports know which player you are
+
+Reports and "From my mistakes" puzzles only use **your** moves. A game counts once the app knows
+your colour: either the game came from a linked Lichess / Chess.com account, or you chose
+*I played White / Black* in the game's review menu.
+
+### Database upgrades
+
+The local database is versioned (`schemaVersion` in `lib/core/db/app_database.dart`). When the
+analysis rules change, bump `kAnalysisVersion` in `game_repository.dart`: stored analyses are
+re-derived from the saved engine results the next time the report or puzzles open — no
+re-analysis needed.
 
 ### Code generation
 
@@ -132,7 +146,8 @@ app/lib/
   core/         theme, router, settings, shared widgets, db (Drift), engine (UCI + per-platform transports)
   features/     one folder per feature:
                 games (PGN + Lichess/Chess.com import, library), analysis (win%, accuracy,
-                classification, opening book, runner), review (review screen),
+                classification, motifs, opening book, runner, batch), review (review screen),
+                reports (personal report + weekly focus), puzzles (trainer from own mistakes),
                 home, analyze, puzzles, play, profile, settings, shell, design_system
   l10n/         ARB files (en, fr, ar) + generated localizations
 ```

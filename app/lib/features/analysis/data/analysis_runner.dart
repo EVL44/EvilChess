@@ -70,7 +70,12 @@ class AnalysisRunner {
     }
 
     final analysis = analyzeGame(game, results, book: book);
-    await repository.saveAnalysis(game.id, analysis, depth: depth);
+    await repository.saveAnalysis(
+      game.id,
+      analysis,
+      depth: depth,
+      fenBefore: [for (final p in game.plies) p.fenBefore],
+    );
     return analysis;
   }
 

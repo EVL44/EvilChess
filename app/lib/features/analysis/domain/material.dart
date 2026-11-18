@@ -35,7 +35,7 @@ GamePhase phaseOf(Position pos, int ply) {
 
 /// Static exchange evaluation on [square] for [side] to capture first:
 /// the material [side] can expect to win (≥ 0) by starting captures there.
-int _see(Board board, Square square, Side side) {
+int staticExchange(Board board, Square square, Side side) {
   final target = board.pieceAt(square);
   if (target == null) return 0;
   final attackers = board.attacksTo(square, side);
@@ -53,7 +53,8 @@ int _see(Board board, Square square, Side side) {
   }
   final attacker = board.pieceAt(from!)!;
   final after = board.removePieceAt(from).setPieceAt(square, attacker);
-  final gain = pieceValue(target.role) - _see(after, square, side.opposite);
+  final gain =
+      pieceValue(target.role) - staticExchange(after, square, side.opposite);
   return gain > 0 ? gain : 0;
 }
 
@@ -76,7 +77,7 @@ bool isSacrifice(Position before, Move move) {
   for (final sq in after.board.bySide(mover).squares) {
     final role = after.board.roleAt(sq)!;
     if (role == Role.king || role == Role.pawn) continue;
-    final loss = _see(after.board, sq, mover.opposite);
+    final loss = staticExchange(after.board, sq, mover.opposite);
     if (loss > maxLoss) maxLoss = loss;
   }
   return maxLoss - capturedValue >= 2;
