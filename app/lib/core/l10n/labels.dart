@@ -3,6 +3,8 @@ import 'package:dartchess/dartchess.dart' show Role;
 import '../../features/analysis/domain/game_analysis.dart';
 import '../../features/analysis/domain/material.dart';
 import '../../features/analysis/domain/motifs.dart';
+import '../../features/bots/bot_game_controller.dart';
+import '../../features/bots/domain/bot.dart';
 import '../../features/games/domain/game_record.dart';
 import '../../features/reports/domain/report.dart';
 import '../../l10n/app_localizations.dart';
@@ -99,4 +101,32 @@ extension DomainLabels on AppLocalizations {
       if (m.contains(Motif.timeTrouble)) explainTimeTrouble,
     ];
   }
+
+  String botStyle(BotStyle s) => switch (s) {
+    BotStyle.balanced => styleBalanced,
+    BotStyle.aggressive => styleAggressive,
+    BotStyle.defensive => styleDefensive,
+    BotStyle.tricky => styleTricky,
+    BotStyle.materialistic => styleMaterialistic,
+  };
+
+  String botBio(Bot b) => switch (b.id) {
+    'pip' => botBioPip,
+    'gremlina' => botBioGremlina,
+    'bramble' => botBioBramble,
+    'hex' => botBioHex,
+    'grimsby' => botBioGrimsby,
+    'vexa' => botBioVexa,
+    'warlock' => botBioWarlock,
+    _ => botBioMalakar,
+  };
+
+  String gameEnd(GameEnd e) => switch (e) {
+    GameEnd.checkmate => endCheckmate,
+    GameEnd.stalemate => endStalemate,
+    GameEnd.insufficientMaterial => endInsufficient,
+    GameEnd.threefoldRepetition => endThreefold,
+    GameEnd.fiftyMoveRule => endFiftyMoves,
+    GameEnd.resignation => endResignation,
+  };
 }

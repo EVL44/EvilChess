@@ -77,10 +77,12 @@ class FakeUciTransport implements UciTransport {
         'info depth $depth seldepth ${depth + 2} multipv 1 score $score '
         'nodes 1000 nps 100000 pv $best',
       );
-      if (multiPv > 1 && legal.length > 1) {
-        final other = legal.firstWhere((m) => m != best);
-        final second = line?.secondCp ?? (line?.cp ?? 0) - 30;
-        _emit('info depth $depth multipv 2 score cp $second pv $other');
+      final others = legal.where((m) => m != best).toList();
+      for (var k = 2; k <= multiPv && k - 2 < others.length; k++) {
+        final cp = k == 2
+            ? line?.secondCp ?? (line?.cp ?? 0) - 30
+            : (line?.cp ?? 0) - 30 * k;
+        _emit('info depth $depth multipv $k score cp $cp pv ${others[k - 2]}');
       }
       _emit('bestmove $best');
     } else if (cmd == 'quit') {

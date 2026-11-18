@@ -1208,6 +1208,252 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Time trouble'**
   String get timeTroubleLabel;
+
+  /// No description provided for @chooseOpponent.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your opponent'**
+  String get chooseOpponent;
+
+  /// No description provided for @botsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Bots with personalities, from total beginner to merciless.'**
+  String get botsSubtitle;
+
+  /// No description provided for @botRating.
+  ///
+  /// In en, this message translates to:
+  /// **'~{rating}'**
+  String botRating(int rating);
+
+  /// No description provided for @botRatingNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Bot ratings are rough estimates.'**
+  String get botRatingNote;
+
+  /// No description provided for @styleBalanced.
+  ///
+  /// In en, this message translates to:
+  /// **'Balanced'**
+  String get styleBalanced;
+
+  /// No description provided for @styleAggressive.
+  ///
+  /// In en, this message translates to:
+  /// **'Aggressive'**
+  String get styleAggressive;
+
+  /// No description provided for @styleDefensive.
+  ///
+  /// In en, this message translates to:
+  /// **'Defensive'**
+  String get styleDefensive;
+
+  /// No description provided for @styleTricky.
+  ///
+  /// In en, this message translates to:
+  /// **'Tricky'**
+  String get styleTricky;
+
+  /// No description provided for @styleMaterialistic.
+  ///
+  /// In en, this message translates to:
+  /// **'Greedy'**
+  String get styleMaterialistic;
+
+  /// No description provided for @botBioPip.
+  ///
+  /// In en, this message translates to:
+  /// **'Just learned how the horsey moves. Grabs anything that isn\'t nailed down.'**
+  String get botBioPip;
+
+  /// No description provided for @botBioGremlina.
+  ///
+  /// In en, this message translates to:
+  /// **'Loves a check, any check. Attacks first, thinks later.'**
+  String get botBioGremlina;
+
+  /// No description provided for @botBioBramble.
+  ///
+  /// In en, this message translates to:
+  /// **'Castles early, hides behind his pawns and waits for you to overreach.'**
+  String get botBioBramble;
+
+  /// No description provided for @botBioHex.
+  ///
+  /// In en, this message translates to:
+  /// **'Sets little traps everywhere. Look twice before you take that pawn.'**
+  String get botBioHex;
+
+  /// No description provided for @botBioGrimsby.
+  ///
+  /// In en, this message translates to:
+  /// **'A club player of the old school: sound openings, solid moves, few gifts.'**
+  String get botBioGrimsby;
+
+  /// No description provided for @botBioVexa.
+  ///
+  /// In en, this message translates to:
+  /// **'Sharp, fast and fearless. She will sacrifice to get at your king.'**
+  String get botBioVexa;
+
+  /// No description provided for @botBioWarlock.
+  ///
+  /// In en, this message translates to:
+  /// **'Sees deep, gives nothing away and squeezes you slowly.'**
+  String get botBioWarlock;
+
+  /// No description provided for @botBioMalakar.
+  ///
+  /// In en, this message translates to:
+  /// **'Full-strength Stockfish. It does not blink. Good luck.'**
+  String get botBioMalakar;
+
+  /// No description provided for @playAs.
+  ///
+  /// In en, this message translates to:
+  /// **'Play as'**
+  String get playAs;
+
+  /// No description provided for @randomSide.
+  ///
+  /// In en, this message translates to:
+  /// **'Random'**
+  String get randomSide;
+
+  /// No description provided for @allowTakebacks.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow takebacks'**
+  String get allowTakebacks;
+
+  /// No description provided for @playButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Play'**
+  String get playButton;
+
+  /// No description provided for @botThinking.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} is thinking…'**
+  String botThinking(String name);
+
+  /// No description provided for @yourTurn.
+  ///
+  /// In en, this message translates to:
+  /// **'Your move'**
+  String get yourTurn;
+
+  /// No description provided for @you.
+  ///
+  /// In en, this message translates to:
+  /// **'You'**
+  String get you;
+
+  /// No description provided for @hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Hint'**
+  String get hint;
+
+  /// No description provided for @takeBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Take back'**
+  String get takeBack;
+
+  /// No description provided for @resign.
+  ///
+  /// In en, this message translates to:
+  /// **'Resign'**
+  String get resign;
+
+  /// No description provided for @resignConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Resign this game?'**
+  String get resignConfirm;
+
+  /// No description provided for @youWon.
+  ///
+  /// In en, this message translates to:
+  /// **'You won!'**
+  String get youWon;
+
+  /// No description provided for @youLost.
+  ///
+  /// In en, this message translates to:
+  /// **'You lost'**
+  String get youLost;
+
+  /// No description provided for @gameDrawn.
+  ///
+  /// In en, this message translates to:
+  /// **'Draw'**
+  String get gameDrawn;
+
+  /// No description provided for @endCheckmate.
+  ///
+  /// In en, this message translates to:
+  /// **'by checkmate'**
+  String get endCheckmate;
+
+  /// No description provided for @endStalemate.
+  ///
+  /// In en, this message translates to:
+  /// **'by stalemate'**
+  String get endStalemate;
+
+  /// No description provided for @endInsufficient.
+  ///
+  /// In en, this message translates to:
+  /// **'insufficient material'**
+  String get endInsufficient;
+
+  /// No description provided for @endThreefold.
+  ///
+  /// In en, this message translates to:
+  /// **'threefold repetition'**
+  String get endThreefold;
+
+  /// No description provided for @endFiftyMoves.
+  ///
+  /// In en, this message translates to:
+  /// **'fifty-move rule'**
+  String get endFiftyMoves;
+
+  /// No description provided for @endResignation.
+  ///
+  /// In en, this message translates to:
+  /// **'by resignation'**
+  String get endResignation;
+
+  /// No description provided for @reviewGame.
+  ///
+  /// In en, this message translates to:
+  /// **'Review game'**
+  String get reviewGame;
+
+  /// No description provided for @rematch.
+  ///
+  /// In en, this message translates to:
+  /// **'Rematch'**
+  String get rematch;
+
+  /// No description provided for @newOpponent.
+  ///
+  /// In en, this message translates to:
+  /// **'New opponent'**
+  String get newOpponent;
+
+  /// No description provided for @botError.
+  ///
+  /// In en, this message translates to:
+  /// **'The bot could not move: {message}'**
+  String botError(String message);
 }
 
 class _AppLocalizationsDelegate

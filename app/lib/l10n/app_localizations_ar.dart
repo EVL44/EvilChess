@@ -687,4 +687,138 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get timeTroubleLabel => 'ضغط الوقت';
+
+  @override
+  String get chooseOpponent => 'اختر خصمك';
+
+  @override
+  String get botsSubtitle =>
+      'روبوتات بشخصيات مختلفة، من المبتدئ تمامًا إلى الذي لا يرحم.';
+
+  @override
+  String botRating(int rating) {
+    return '~$rating';
+  }
+
+  @override
+  String get botRatingNote => 'تصنيفات الروبوتات تقديرية.';
+
+  @override
+  String get styleBalanced => 'متوازن';
+
+  @override
+  String get styleAggressive => 'هجومي';
+
+  @override
+  String get styleDefensive => 'دفاعي';
+
+  @override
+  String get styleTricky => 'مخادع';
+
+  @override
+  String get styleMaterialistic => 'طمّاع';
+
+  @override
+  String get botBioPip => 'تعلّم للتو كيف يتحرك الحصان. يلتقط أي قطعة متروكة.';
+
+  @override
+  String get botBioGremlina => 'تعشق الكش، أيّ كش. تهاجم أولًا وتفكّر لاحقًا.';
+
+  @override
+  String get botBioBramble =>
+      'يُبيّت مبكرًا ويختبئ خلف بيادقه وينتظر أن تتسرّع.';
+
+  @override
+  String get botBioHex =>
+      'تنصب الفخاخ في كل مكان. فكّر مرتين قبل أن تأخذ ذلك البيدق.';
+
+  @override
+  String get botBioGrimsby =>
+      'لاعب نادٍ من الطراز القديم: افتتاحات سليمة ونقلات متينة وقليل من الهدايا.';
+
+  @override
+  String get botBioVexa => 'حادّة وسريعة وجريئة. ستضحّي لتصل إلى ملكك.';
+
+  @override
+  String get botBioWarlock => 'يرى بعيدًا ولا يفرّط في شيء ويخنقك ببطء.';
+
+  @override
+  String get botBioMalakar =>
+      'Stockfish بكامل قوته. لا يرمش أبدًا. حظًا موفقًا.';
+
+  @override
+  String get playAs => 'العب بـ';
+
+  @override
+  String get randomSide => 'عشوائي';
+
+  @override
+  String get allowTakebacks => 'السماح بالتراجع';
+
+  @override
+  String get playButton => 'العب';
+
+  @override
+  String botThinking(String name) {
+    return '$name يفكّر…';
+  }
+
+  @override
+  String get yourTurn => 'دورك';
+
+  @override
+  String get you => 'أنت';
+
+  @override
+  String get hint => 'تلميح';
+
+  @override
+  String get takeBack => 'تراجع';
+
+  @override
+  String get resign => 'استسلام';
+
+  @override
+  String get resignConfirm => 'هل تستسلم في هذه المباراة؟';
+
+  @override
+  String get youWon => 'لقد فزت!';
+
+  @override
+  String get youLost => 'لقد خسرت';
+
+  @override
+  String get gameDrawn => 'تعادل';
+
+  @override
+  String get endCheckmate => 'بكش مات';
+
+  @override
+  String get endStalemate => 'بالجمود';
+
+  @override
+  String get endInsufficient => 'مادة غير كافية';
+
+  @override
+  String get endThreefold => 'تكرار ثلاثي';
+
+  @override
+  String get endFiftyMoves => 'قاعدة الخمسين نقلة';
+
+  @override
+  String get endResignation => 'بالاستسلام';
+
+  @override
+  String get reviewGame => 'راجع المباراة';
+
+  @override
+  String get rematch => 'إعادة المباراة';
+
+  @override
+  String get newOpponent => 'خصم جديد';
+
+  @override
+  String botError(String message) {
+    return 'تعذّر على الروبوت اللعب: $message';
+  }
 }
