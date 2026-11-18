@@ -817,4 +817,212 @@ class AppLocalizationsFr extends AppLocalizations {
   String botError(String message) {
     return 'Le bot n\'a pas pu jouer : $message';
   }
+
+  @override
+  String get signInTitle => 'Connexion';
+
+  @override
+  String get signInSubtitle =>
+      'Synchronisez vos parties, rapports et classement de problèmes sur tous vos appareils.';
+
+  @override
+  String get guestNote =>
+      'Vous jouez en invité. Tout reste sur cet appareil jusqu\'à votre connexion.';
+
+  @override
+  String get emailLabel => 'E-mail';
+
+  @override
+  String get passwordLabel => 'Mot de passe';
+
+  @override
+  String get passwordHint => 'Au moins 8 caractères';
+
+  @override
+  String get displayNameLabel => 'Nom d\'affichage (facultatif)';
+
+  @override
+  String get signInButton => 'Se connecter';
+
+  @override
+  String get createAccountButton => 'Créer un compte';
+
+  @override
+  String get switchToRegister => 'Nouveau ? Créez un compte';
+
+  @override
+  String get switchToSignIn => 'Déjà un compte ? Connectez-vous';
+
+  @override
+  String get continueWithGoogle => 'Continuer avec Google';
+
+  @override
+  String get continueWithApple => 'Continuer avec Apple';
+
+  @override
+  String get socialSoon =>
+      'La connexion Google et Apple sera activée une fois l\'application enregistrée chez eux.';
+
+  @override
+  String get signOut => 'Se déconnecter';
+
+  @override
+  String get puzzleRatingLabel => 'Classement problèmes';
+
+  @override
+  String puzzlesPlayedCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count problèmes classés',
+      one: '1 problème classé',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get syncTitle => 'Synchronisation';
+
+  @override
+  String get syncing => 'Synchronisation…';
+
+  @override
+  String syncDone(int sent, int received) {
+    return 'Synchronisé : $sent envoyés, $received reçus';
+  }
+
+  @override
+  String syncFailed(String message) {
+    return 'Échec de la synchronisation : $message';
+  }
+
+  @override
+  String get serverOffline =>
+      'Serveur injoignable. Vos données sont en sécurité sur cet appareil.';
+
+  @override
+  String get errEmailTaken => 'Un compte existe déjà avec cet e-mail.';
+
+  @override
+  String get errInvalidCredentials => 'E-mail ou mot de passe incorrect.';
+
+  @override
+  String get errRateLimited => 'Trop de tentatives. Attendez une minute.';
+
+  @override
+  String errGeneric(String message) {
+    return 'Une erreur s\'est produite : $message';
+  }
+
+  @override
+  String get editName => 'Changer de nom';
+
+  @override
+  String get save => 'Enregistrer';
+
+  @override
+  String importingOnServer(int count) {
+    return 'Import sur le serveur… $count parties';
+  }
+
+  @override
+  String get dailyPuzzle => 'Problème du jour';
+
+  @override
+  String get dailyPuzzleBody => 'Le même problème pour tous, chaque jour.';
+
+  @override
+  String get ratedPuzzles => 'Problèmes classés';
+
+  @override
+  String get ratedPuzzlesBody =>
+      'Des millions de problèmes de la base Lichess, adaptés à votre niveau.';
+
+  @override
+  String get signInForRated =>
+      'Connectez-vous pour jouer des problèmes classés.';
+
+  @override
+  String get puzzleRush => 'Puzzle Rush';
+
+  @override
+  String get puzzleRushBody =>
+      'Résolvez-en un maximum. Trois erreurs et c\'est fini.';
+
+  @override
+  String get rush3min => '3 min';
+
+  @override
+  String get rush5min => '5 min';
+
+  @override
+  String get rushSurvival => 'Survie';
+
+  @override
+  String rushScore(int score) {
+    return 'Score $score';
+  }
+
+  @override
+  String rushBest(int best) {
+    return 'Record $best';
+  }
+
+  @override
+  String get rushNewBest => 'Nouveau record !';
+
+  @override
+  String get rushTimeUp => 'Temps écoulé !';
+
+  @override
+  String get rushStruckOut => 'Trois erreurs !';
+
+  @override
+  String get rushPlayAgain => 'Rejouer';
+
+  @override
+  String findBestMove(String side) {
+    return 'Trouvez le meilleur coup pour les $side';
+  }
+
+  @override
+  String get puzzleCorrect => 'Correct !';
+
+  @override
+  String ratingChange(int rating, String delta) {
+    return 'Classement $rating ($delta)';
+  }
+
+  @override
+  String get puzzleNotRated => 'Déjà joué : pas reclassé.';
+
+  @override
+  String get offlinePack => 'Pack hors ligne';
+
+  @override
+  String offlinePackBody(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count problèmes enregistrés sur cet appareil.',
+      one: '1 problème enregistré sur cet appareil.',
+      zero:
+          'Aucun problème enregistré. Téléchargez-en pour jouer sans internet.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get downloadPack => 'Télécharger 100 problèmes';
+
+  @override
+  String get playingOffline =>
+      'Hors ligne : problèmes enregistrés sur cet appareil.';
+
+  @override
+  String get puzzlesUnavailable =>
+      'Impossible de charger les problèmes du serveur.';
+
+  @override
+  String get nextPuzzle => 'Problème suivant';
 }

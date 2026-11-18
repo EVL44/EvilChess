@@ -1,12 +1,17 @@
 import 'package:drift/drift.dart' show DatabaseConnection, driftRuntimeOptions;
 import 'package:drift/native.dart';
 import 'package:evilchess/app.dart';
+import 'package:evilchess/core/api/api_client.dart';
 import 'package:evilchess/core/db/app_database.dart';
 import 'package:evilchess/core/db/database_provider.dart';
 import 'package:evilchess/core/engine/engine_service.dart';
 import 'package:evilchess/core/settings/app_settings.dart';
+import 'package:evilchess/features/account/account.dart';
+import 'package:evilchess/features/games/data/import_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:http/http.dart' as http;
+import 'package:http/testing.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -56,6 +61,8 @@ Future<SharedPreferences> pumpEvilApp(
   Size size = phoneSize,
   AppDatabase? db,
   FakeUciTransport? engine,
+  http.Client? server,
+  TokenStore? tokens,
 }) async {
   tester.view.physicalSize = size;
   tester.view.devicePixelRatio = 1;
@@ -74,6 +81,12 @@ Future<SharedPreferences> pumpEvilApp(
         appDatabaseProvider.overrideWithValue(database),
         engineTransportFactoryProvider.overrideWithValue(() async => fake),
         analysisDepthProvider.overrideWithValue(8),
+        apiUrlProvider.overrideWithValue('http://api'),
+        tokenStoreProvider.overrideWithValue(tokens ?? MemoryTokenStore()),
+        // No server unless a test provides one: every call is "offline".
+        httpClientProvider.overrideWithValue(
+          server ?? MockClient((_) async => throw Exception('offline')),
+        ),
       ],
       child: const EvilChessApp(),
     ),

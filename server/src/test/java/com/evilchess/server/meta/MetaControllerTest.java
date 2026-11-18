@@ -6,10 +6,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import com.evilchess.server.config.RateLimitFilter;
+import com.evilchess.server.config.SecurityConfig;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest(MetaController.class)
+@Import({SecurityConfig.class, RateLimitFilter.class})
 class MetaControllerTest {
 
     @Autowired

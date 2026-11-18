@@ -14,6 +14,7 @@ import '../analyze/analyze_screen.dart' show gameSummariesProvider;
 import '../games/data/game_repository.dart';
 import '../reports/domain/report.dart';
 import 'data/puzzle_repository.dart';
+import 'widgets/online_puzzle_cards.dart';
 
 typedef PuzzleHub = ({
   PuzzleProgress all,
@@ -69,6 +70,8 @@ class PuzzlesScreen extends ConsumerWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    const OnlinePuzzleCards(),
+                    const SizedBox(height: EcSpace.lg),
                     Card(
                       child: Padding(
                         padding: const EdgeInsets.all(EcSpace.lg),

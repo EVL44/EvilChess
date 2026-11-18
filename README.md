@@ -21,7 +21,8 @@ Why the split licence: see [docs/adr/0001-licensing.md](docs/adr/0001-licensing.
 | 1 | Offline analysis MVP (PGN + Lichess/Chess.com import, Stockfish, review screen) | ✅ done |
 | 2 | Reports + puzzles from my mistakes | ✅ done |
 | 3 | Bots: 8 personalities, hints, takebacks, rematch, post-game review | ✅ done |
-| 4 | Backend + accounts, server-side imports, rated puzzles | next |
+| 4 | Accounts, sync, server-side imports, rated puzzles, Puzzle Rush, daily puzzle | ✅ done (Google/Apple need keys) |
+| 5 | Online play | next |
 
 ## Prerequisites
 
@@ -87,6 +88,17 @@ move for the weakest, opening-book moves for variety, and a style bonus. Why not
 Finished bot games are saved to your library with your colour set, so they count in your
 report and their mistakes become puzzles.
 
+### Accounts and sync
+
+- Email + password today; the server already verifies Google and Apple ID tokens once their
+  client IDs are configured, and the app's buttons are in place for when the platform SDKs
+  are set up.
+- Access tokens last 15 minutes; refresh tokens 60 days, rotated on every use (reusing an old
+  one ends every session — theft protection). Tokens are kept in the platform keychain.
+- Sync is last-write-wins per item (games with their analysis, deletions, mistake-puzzle
+  progress, settings). The first sync after signing in uploads everything the guest had.
+- Signed in, Lichess / Chess.com imports run on the server and reach every device by sync.
+
 ### How reports know which player you are
 
 Reports and "From my mistakes" puzzles only use **your** moves. A game counts once the app knows
@@ -116,7 +128,48 @@ flutter analyze --fatal-infos --fatal-warnings
 flutter test
 ```
 
-## Run the backend
+## Run the backend (needed for accounts, sync and online puzzles)
+
+Everything in Phases 0–3 works without a server. Accounts, sync, rated puzzles, Puzzle Rush
+and the daily puzzle need it.
+
+```
+docker compose -f infra/docker-compose.yml up -d --build
+```
+
+> **Windows + an installed PostgreSQL:** if PostgreSQL is already running on port 5432, start
+> the Docker one on another port (`$env:EVILCHESS_DB_PORT = "5433"` before `docker compose`),
+> and when running the server with Gradle set `DB_URL=jdbc:postgresql://localhost:5433/evilchess`.
+
+### Load the Lichess puzzle database (once, ~270 MB)
+
+Download `lichess_db_puzzle.csv.zst` from https://database.lichess.org/#puzzles (CC0) into a
+`data/` folder at the repository root (it is git-ignored), then start the server once with:
+
+```
+$env:EVILCHESS_PUZZLES_IMPORT = "/data/lichess_db_puzzle.csv.zst"   # Docker
+docker compose -f infra/docker-compose.yml up -d server
+```
+
+(with Gradle: `--evilchess.puzzles.import=../data/lichess_db_puzzle.csv.zst`). Already
+imported puzzles are skipped, so re-running with a newer export only adds the new ones.
+
+### Server settings
+
+| Variable | Default | What |
+|---|---|---|
+| `EVILCHESS_JWT_SECRET` | a dev-only value | Signing key for access tokens. **Set a long random value anywhere real.** |
+| `EVILCHESS_GOOGLE_CLIENT_IDS` | empty (off) | Google OAuth client IDs, comma-separated |
+| `EVILCHESS_APPLE_CLIENT_IDS` | empty (off) | Apple Services/Bundle IDs, comma-separated |
+| `DB_URL`, `DB_USER`, `DB_PASSWORD` | local Docker | PostgreSQL |
+| `REDIS_HOST`, `REDIS_PORT` | local Docker | Redis |
+
+### Point the app at a server
+
+The app uses `http://localhost:8080` (the Android emulator: `http://10.0.2.2:8080`). For
+anything else build with `--dart-define=API_URL=https://your-server`.
+
+## Run the backend (details)
 
 ```
 docker compose -f infra/docker-compose.yml up -d --build   # db + redis + server on :8080

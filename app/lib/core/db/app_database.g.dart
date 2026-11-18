@@ -242,6 +242,17 @@ class $GamesTable extends Games with TableInfo<$GamesTable, GameRow> {
     requiredDuringInsert: false,
     defaultValue: const Constant(0),
   );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<int> updatedAt = GeneratedColumn<int>(
+    'updated_at_ms',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
   static const VerificationMeta _whiteAccuracyMeta = const VerificationMeta(
     'whiteAccuracy',
   );
@@ -289,6 +300,7 @@ class $GamesTable extends Games with TableInfo<$GamesTable, GameRow> {
     analyzedAt,
     analysisDepth,
     analysisVersion,
+    updatedAt,
     whiteAccuracy,
     blackAccuracy,
   ];
@@ -468,6 +480,12 @@ class $GamesTable extends Games with TableInfo<$GamesTable, GameRow> {
         ),
       );
     }
+    if (data.containsKey('updated_at_ms')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at_ms']!, _updatedAtMeta),
+      );
+    }
     if (data.containsKey('white_accuracy')) {
       context.handle(
         _whiteAccuracyMeta,
@@ -587,6 +605,10 @@ class $GamesTable extends Games with TableInfo<$GamesTable, GameRow> {
         DriftSqlType.int,
         data['${effectivePrefix}analysis_version'],
       )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}updated_at_ms'],
+      ),
       whiteAccuracy: attachedDatabase.typeMapping.read(
         DriftSqlType.double,
         data['${effectivePrefix}white_accuracy'],
@@ -635,6 +657,10 @@ class GameRow extends DataClass implements Insertable<GameRow> {
   /// Version of the analysis rules the stored rows were produced with
   /// (see `kAnalysisVersion`); older rows are upgraded without the engine.
   final int analysisVersion;
+
+  /// Last local change (import, analysis, colour), in milliseconds since
+  /// the epoch — drives sync pushes. (Drift dates only keep seconds.)
+  final int? updatedAt;
   final double? whiteAccuracy;
   final double? blackAccuracy;
   const GameRow({
@@ -661,6 +687,7 @@ class GameRow extends DataClass implements Insertable<GameRow> {
     this.analyzedAt,
     this.analysisDepth,
     required this.analysisVersion,
+    this.updatedAt,
     this.whiteAccuracy,
     this.blackAccuracy,
   });
@@ -714,6 +741,9 @@ class GameRow extends DataClass implements Insertable<GameRow> {
       map['analysis_depth'] = Variable<int>(analysisDepth);
     }
     map['analysis_version'] = Variable<int>(analysisVersion);
+    if (!nullToAbsent || updatedAt != null) {
+      map['updated_at_ms'] = Variable<int>(updatedAt);
+    }
     if (!nullToAbsent || whiteAccuracy != null) {
       map['white_accuracy'] = Variable<double>(whiteAccuracy);
     }
@@ -768,6 +798,9 @@ class GameRow extends DataClass implements Insertable<GameRow> {
           ? const Value.absent()
           : Value(analysisDepth),
       analysisVersion: Value(analysisVersion),
+      updatedAt: updatedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(updatedAt),
       whiteAccuracy: whiteAccuracy == null && nullToAbsent
           ? const Value.absent()
           : Value(whiteAccuracy),
@@ -806,6 +839,7 @@ class GameRow extends DataClass implements Insertable<GameRow> {
       analyzedAt: serializer.fromJson<DateTime?>(json['analyzedAt']),
       analysisDepth: serializer.fromJson<int?>(json['analysisDepth']),
       analysisVersion: serializer.fromJson<int>(json['analysisVersion']),
+      updatedAt: serializer.fromJson<int?>(json['updatedAt']),
       whiteAccuracy: serializer.fromJson<double?>(json['whiteAccuracy']),
       blackAccuracy: serializer.fromJson<double?>(json['blackAccuracy']),
     );
@@ -837,6 +871,7 @@ class GameRow extends DataClass implements Insertable<GameRow> {
       'analyzedAt': serializer.toJson<DateTime?>(analyzedAt),
       'analysisDepth': serializer.toJson<int?>(analysisDepth),
       'analysisVersion': serializer.toJson<int>(analysisVersion),
+      'updatedAt': serializer.toJson<int?>(updatedAt),
       'whiteAccuracy': serializer.toJson<double?>(whiteAccuracy),
       'blackAccuracy': serializer.toJson<double?>(blackAccuracy),
     };
@@ -866,6 +901,7 @@ class GameRow extends DataClass implements Insertable<GameRow> {
     Value<DateTime?> analyzedAt = const Value.absent(),
     Value<int?> analysisDepth = const Value.absent(),
     int? analysisVersion,
+    Value<int?> updatedAt = const Value.absent(),
     Value<double?> whiteAccuracy = const Value.absent(),
     Value<double?> blackAccuracy = const Value.absent(),
   }) => GameRow(
@@ -894,6 +930,7 @@ class GameRow extends DataClass implements Insertable<GameRow> {
         ? analysisDepth.value
         : this.analysisDepth,
     analysisVersion: analysisVersion ?? this.analysisVersion,
+    updatedAt: updatedAt.present ? updatedAt.value : this.updatedAt,
     whiteAccuracy: whiteAccuracy.present
         ? whiteAccuracy.value
         : this.whiteAccuracy,
@@ -940,6 +977,7 @@ class GameRow extends DataClass implements Insertable<GameRow> {
       analysisVersion: data.analysisVersion.present
           ? data.analysisVersion.value
           : this.analysisVersion,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
       whiteAccuracy: data.whiteAccuracy.present
           ? data.whiteAccuracy.value
           : this.whiteAccuracy,
@@ -975,6 +1013,7 @@ class GameRow extends DataClass implements Insertable<GameRow> {
           ..write('analyzedAt: $analyzedAt, ')
           ..write('analysisDepth: $analysisDepth, ')
           ..write('analysisVersion: $analysisVersion, ')
+          ..write('updatedAt: $updatedAt, ')
           ..write('whiteAccuracy: $whiteAccuracy, ')
           ..write('blackAccuracy: $blackAccuracy')
           ..write(')'))
@@ -1006,6 +1045,7 @@ class GameRow extends DataClass implements Insertable<GameRow> {
     analyzedAt,
     analysisDepth,
     analysisVersion,
+    updatedAt,
     whiteAccuracy,
     blackAccuracy,
   ]);
@@ -1036,6 +1076,7 @@ class GameRow extends DataClass implements Insertable<GameRow> {
           other.analyzedAt == this.analyzedAt &&
           other.analysisDepth == this.analysisDepth &&
           other.analysisVersion == this.analysisVersion &&
+          other.updatedAt == this.updatedAt &&
           other.whiteAccuracy == this.whiteAccuracy &&
           other.blackAccuracy == this.blackAccuracy);
 }
@@ -1064,6 +1105,7 @@ class GamesCompanion extends UpdateCompanion<GameRow> {
   final Value<DateTime?> analyzedAt;
   final Value<int?> analysisDepth;
   final Value<int> analysisVersion;
+  final Value<int?> updatedAt;
   final Value<double?> whiteAccuracy;
   final Value<double?> blackAccuracy;
   final Value<int> rowid;
@@ -1091,6 +1133,7 @@ class GamesCompanion extends UpdateCompanion<GameRow> {
     this.analyzedAt = const Value.absent(),
     this.analysisDepth = const Value.absent(),
     this.analysisVersion = const Value.absent(),
+    this.updatedAt = const Value.absent(),
     this.whiteAccuracy = const Value.absent(),
     this.blackAccuracy = const Value.absent(),
     this.rowid = const Value.absent(),
@@ -1119,6 +1162,7 @@ class GamesCompanion extends UpdateCompanion<GameRow> {
     this.analyzedAt = const Value.absent(),
     this.analysisDepth = const Value.absent(),
     this.analysisVersion = const Value.absent(),
+    this.updatedAt = const Value.absent(),
     this.whiteAccuracy = const Value.absent(),
     this.blackAccuracy = const Value.absent(),
     this.rowid = const Value.absent(),
@@ -1156,6 +1200,7 @@ class GamesCompanion extends UpdateCompanion<GameRow> {
     Expression<DateTime>? analyzedAt,
     Expression<int>? analysisDepth,
     Expression<int>? analysisVersion,
+    Expression<int>? updatedAt,
     Expression<double>? whiteAccuracy,
     Expression<double>? blackAccuracy,
     Expression<int>? rowid,
@@ -1184,6 +1229,7 @@ class GamesCompanion extends UpdateCompanion<GameRow> {
       if (analyzedAt != null) 'analyzed_at': analyzedAt,
       if (analysisDepth != null) 'analysis_depth': analysisDepth,
       if (analysisVersion != null) 'analysis_version': analysisVersion,
+      if (updatedAt != null) 'updated_at_ms': updatedAt,
       if (whiteAccuracy != null) 'white_accuracy': whiteAccuracy,
       if (blackAccuracy != null) 'black_accuracy': blackAccuracy,
       if (rowid != null) 'rowid': rowid,
@@ -1214,6 +1260,7 @@ class GamesCompanion extends UpdateCompanion<GameRow> {
     Value<DateTime?>? analyzedAt,
     Value<int?>? analysisDepth,
     Value<int>? analysisVersion,
+    Value<int?>? updatedAt,
     Value<double?>? whiteAccuracy,
     Value<double?>? blackAccuracy,
     Value<int>? rowid,
@@ -1242,6 +1289,7 @@ class GamesCompanion extends UpdateCompanion<GameRow> {
       analyzedAt: analyzedAt ?? this.analyzedAt,
       analysisDepth: analysisDepth ?? this.analysisDepth,
       analysisVersion: analysisVersion ?? this.analysisVersion,
+      updatedAt: updatedAt ?? this.updatedAt,
       whiteAccuracy: whiteAccuracy ?? this.whiteAccuracy,
       blackAccuracy: blackAccuracy ?? this.blackAccuracy,
       rowid: rowid ?? this.rowid,
@@ -1320,6 +1368,9 @@ class GamesCompanion extends UpdateCompanion<GameRow> {
     if (analysisVersion.present) {
       map['analysis_version'] = Variable<int>(analysisVersion.value);
     }
+    if (updatedAt.present) {
+      map['updated_at_ms'] = Variable<int>(updatedAt.value);
+    }
     if (whiteAccuracy.present) {
       map['white_accuracy'] = Variable<double>(whiteAccuracy.value);
     }
@@ -1358,6 +1409,7 @@ class GamesCompanion extends UpdateCompanion<GameRow> {
           ..write('analyzedAt: $analyzedAt, ')
           ..write('analysisDepth: $analysisDepth, ')
           ..write('analysisVersion: $analysisVersion, ')
+          ..write('updatedAt: $updatedAt, ')
           ..write('whiteAccuracy: $whiteAccuracy, ')
           ..write('blackAccuracy: $blackAccuracy, ')
           ..write('rowid: $rowid')
@@ -3605,6 +3657,618 @@ class PuzzleAttemptsCompanion extends UpdateCompanion<PuzzleAttemptRow> {
   }
 }
 
+class $DeletedGamesTable extends DeletedGames
+    with TableInfo<$DeletedGamesTable, DeletedGameRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $DeletedGamesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _deletedAtMeta = const VerificationMeta(
+    'deletedAt',
+  );
+  @override
+  late final GeneratedColumn<int> deletedAt = GeneratedColumn<int>(
+    'deleted_at_ms',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, deletedAt];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'deleted_games';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<DeletedGameRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('deleted_at_ms')) {
+      context.handle(
+        _deletedAtMeta,
+        deletedAt.isAcceptableOrUnknown(data['deleted_at_ms']!, _deletedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_deletedAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  DeletedGameRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return DeletedGameRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}deleted_at_ms'],
+      )!,
+    );
+  }
+
+  @override
+  $DeletedGamesTable createAlias(String alias) {
+    return $DeletedGamesTable(attachedDatabase, alias);
+  }
+}
+
+class DeletedGameRow extends DataClass implements Insertable<DeletedGameRow> {
+  final String id;
+
+  /// Milliseconds since the epoch.
+  final int deletedAt;
+  const DeletedGameRow({required this.id, required this.deletedAt});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['deleted_at_ms'] = Variable<int>(deletedAt);
+    return map;
+  }
+
+  DeletedGamesCompanion toCompanion(bool nullToAbsent) {
+    return DeletedGamesCompanion(id: Value(id), deletedAt: Value(deletedAt));
+  }
+
+  factory DeletedGameRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return DeletedGameRow(
+      id: serializer.fromJson<String>(json['id']),
+      deletedAt: serializer.fromJson<int>(json['deletedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'deletedAt': serializer.toJson<int>(deletedAt),
+    };
+  }
+
+  DeletedGameRow copyWith({String? id, int? deletedAt}) =>
+      DeletedGameRow(id: id ?? this.id, deletedAt: deletedAt ?? this.deletedAt);
+  DeletedGameRow copyWithCompanion(DeletedGamesCompanion data) {
+    return DeletedGameRow(
+      id: data.id.present ? data.id.value : this.id,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('DeletedGameRow(')
+          ..write('id: $id, ')
+          ..write('deletedAt: $deletedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, deletedAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is DeletedGameRow &&
+          other.id == this.id &&
+          other.deletedAt == this.deletedAt);
+}
+
+class DeletedGamesCompanion extends UpdateCompanion<DeletedGameRow> {
+  final Value<String> id;
+  final Value<int> deletedAt;
+  final Value<int> rowid;
+  const DeletedGamesCompanion({
+    this.id = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  DeletedGamesCompanion.insert({
+    required String id,
+    required int deletedAt,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       deletedAt = Value(deletedAt);
+  static Insertable<DeletedGameRow> custom({
+    Expression<String>? id,
+    Expression<int>? deletedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (deletedAt != null) 'deleted_at_ms': deletedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  DeletedGamesCompanion copyWith({
+    Value<String>? id,
+    Value<int>? deletedAt,
+    Value<int>? rowid,
+  }) {
+    return DeletedGamesCompanion(
+      id: id ?? this.id,
+      deletedAt: deletedAt ?? this.deletedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at_ms'] = Variable<int>(deletedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('DeletedGamesCompanion(')
+          ..write('id: $id, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $CachedPuzzlesTable extends CachedPuzzles
+    with TableInfo<$CachedPuzzlesTable, CachedPuzzleRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $CachedPuzzlesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _fenMeta = const VerificationMeta('fen');
+  @override
+  late final GeneratedColumn<String> fen = GeneratedColumn<String>(
+    'fen',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _movesMeta = const VerificationMeta('moves');
+  @override
+  late final GeneratedColumn<String> moves = GeneratedColumn<String>(
+    'moves',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _ratingMeta = const VerificationMeta('rating');
+  @override
+  late final GeneratedColumn<int> rating = GeneratedColumn<int>(
+    'rating',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _themesMeta = const VerificationMeta('themes');
+  @override
+  late final GeneratedColumn<String> themes = GeneratedColumn<String>(
+    'themes',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _fetchedAtMeta = const VerificationMeta(
+    'fetchedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> fetchedAt = GeneratedColumn<DateTime>(
+    'fetched_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    fen,
+    moves,
+    rating,
+    themes,
+    fetchedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'cached_puzzles';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<CachedPuzzleRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('fen')) {
+      context.handle(
+        _fenMeta,
+        fen.isAcceptableOrUnknown(data['fen']!, _fenMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_fenMeta);
+    }
+    if (data.containsKey('moves')) {
+      context.handle(
+        _movesMeta,
+        moves.isAcceptableOrUnknown(data['moves']!, _movesMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_movesMeta);
+    }
+    if (data.containsKey('rating')) {
+      context.handle(
+        _ratingMeta,
+        rating.isAcceptableOrUnknown(data['rating']!, _ratingMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_ratingMeta);
+    }
+    if (data.containsKey('themes')) {
+      context.handle(
+        _themesMeta,
+        themes.isAcceptableOrUnknown(data['themes']!, _themesMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_themesMeta);
+    }
+    if (data.containsKey('fetched_at')) {
+      context.handle(
+        _fetchedAtMeta,
+        fetchedAt.isAcceptableOrUnknown(data['fetched_at']!, _fetchedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_fetchedAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  CachedPuzzleRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return CachedPuzzleRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      fen: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}fen'],
+      )!,
+      moves: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}moves'],
+      )!,
+      rating: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}rating'],
+      )!,
+      themes: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}themes'],
+      )!,
+      fetchedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}fetched_at'],
+      )!,
+    );
+  }
+
+  @override
+  $CachedPuzzlesTable createAlias(String alias) {
+    return $CachedPuzzlesTable(attachedDatabase, alias);
+  }
+}
+
+class CachedPuzzleRow extends DataClass implements Insertable<CachedPuzzleRow> {
+  final String id;
+  final String fen;
+
+  /// UCI moves, space separated; the first is the opponent's.
+  final String moves;
+  final int rating;
+  final String themes;
+  final DateTime fetchedAt;
+  const CachedPuzzleRow({
+    required this.id,
+    required this.fen,
+    required this.moves,
+    required this.rating,
+    required this.themes,
+    required this.fetchedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['fen'] = Variable<String>(fen);
+    map['moves'] = Variable<String>(moves);
+    map['rating'] = Variable<int>(rating);
+    map['themes'] = Variable<String>(themes);
+    map['fetched_at'] = Variable<DateTime>(fetchedAt);
+    return map;
+  }
+
+  CachedPuzzlesCompanion toCompanion(bool nullToAbsent) {
+    return CachedPuzzlesCompanion(
+      id: Value(id),
+      fen: Value(fen),
+      moves: Value(moves),
+      rating: Value(rating),
+      themes: Value(themes),
+      fetchedAt: Value(fetchedAt),
+    );
+  }
+
+  factory CachedPuzzleRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return CachedPuzzleRow(
+      id: serializer.fromJson<String>(json['id']),
+      fen: serializer.fromJson<String>(json['fen']),
+      moves: serializer.fromJson<String>(json['moves']),
+      rating: serializer.fromJson<int>(json['rating']),
+      themes: serializer.fromJson<String>(json['themes']),
+      fetchedAt: serializer.fromJson<DateTime>(json['fetchedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'fen': serializer.toJson<String>(fen),
+      'moves': serializer.toJson<String>(moves),
+      'rating': serializer.toJson<int>(rating),
+      'themes': serializer.toJson<String>(themes),
+      'fetchedAt': serializer.toJson<DateTime>(fetchedAt),
+    };
+  }
+
+  CachedPuzzleRow copyWith({
+    String? id,
+    String? fen,
+    String? moves,
+    int? rating,
+    String? themes,
+    DateTime? fetchedAt,
+  }) => CachedPuzzleRow(
+    id: id ?? this.id,
+    fen: fen ?? this.fen,
+    moves: moves ?? this.moves,
+    rating: rating ?? this.rating,
+    themes: themes ?? this.themes,
+    fetchedAt: fetchedAt ?? this.fetchedAt,
+  );
+  CachedPuzzleRow copyWithCompanion(CachedPuzzlesCompanion data) {
+    return CachedPuzzleRow(
+      id: data.id.present ? data.id.value : this.id,
+      fen: data.fen.present ? data.fen.value : this.fen,
+      moves: data.moves.present ? data.moves.value : this.moves,
+      rating: data.rating.present ? data.rating.value : this.rating,
+      themes: data.themes.present ? data.themes.value : this.themes,
+      fetchedAt: data.fetchedAt.present ? data.fetchedAt.value : this.fetchedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CachedPuzzleRow(')
+          ..write('id: $id, ')
+          ..write('fen: $fen, ')
+          ..write('moves: $moves, ')
+          ..write('rating: $rating, ')
+          ..write('themes: $themes, ')
+          ..write('fetchedAt: $fetchedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, fen, moves, rating, themes, fetchedAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is CachedPuzzleRow &&
+          other.id == this.id &&
+          other.fen == this.fen &&
+          other.moves == this.moves &&
+          other.rating == this.rating &&
+          other.themes == this.themes &&
+          other.fetchedAt == this.fetchedAt);
+}
+
+class CachedPuzzlesCompanion extends UpdateCompanion<CachedPuzzleRow> {
+  final Value<String> id;
+  final Value<String> fen;
+  final Value<String> moves;
+  final Value<int> rating;
+  final Value<String> themes;
+  final Value<DateTime> fetchedAt;
+  final Value<int> rowid;
+  const CachedPuzzlesCompanion({
+    this.id = const Value.absent(),
+    this.fen = const Value.absent(),
+    this.moves = const Value.absent(),
+    this.rating = const Value.absent(),
+    this.themes = const Value.absent(),
+    this.fetchedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  CachedPuzzlesCompanion.insert({
+    required String id,
+    required String fen,
+    required String moves,
+    required int rating,
+    required String themes,
+    required DateTime fetchedAt,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       fen = Value(fen),
+       moves = Value(moves),
+       rating = Value(rating),
+       themes = Value(themes),
+       fetchedAt = Value(fetchedAt);
+  static Insertable<CachedPuzzleRow> custom({
+    Expression<String>? id,
+    Expression<String>? fen,
+    Expression<String>? moves,
+    Expression<int>? rating,
+    Expression<String>? themes,
+    Expression<DateTime>? fetchedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (fen != null) 'fen': fen,
+      if (moves != null) 'moves': moves,
+      if (rating != null) 'rating': rating,
+      if (themes != null) 'themes': themes,
+      if (fetchedAt != null) 'fetched_at': fetchedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  CachedPuzzlesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? fen,
+    Value<String>? moves,
+    Value<int>? rating,
+    Value<String>? themes,
+    Value<DateTime>? fetchedAt,
+    Value<int>? rowid,
+  }) {
+    return CachedPuzzlesCompanion(
+      id: id ?? this.id,
+      fen: fen ?? this.fen,
+      moves: moves ?? this.moves,
+      rating: rating ?? this.rating,
+      themes: themes ?? this.themes,
+      fetchedAt: fetchedAt ?? this.fetchedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (fen.present) {
+      map['fen'] = Variable<String>(fen.value);
+    }
+    if (moves.present) {
+      map['moves'] = Variable<String>(moves.value);
+    }
+    if (rating.present) {
+      map['rating'] = Variable<int>(rating.value);
+    }
+    if (themes.present) {
+      map['themes'] = Variable<String>(themes.value);
+    }
+    if (fetchedAt.present) {
+      map['fetched_at'] = Variable<DateTime>(fetchedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CachedPuzzlesCompanion(')
+          ..write('id: $id, ')
+          ..write('fen: $fen, ')
+          ..write('moves: $moves, ')
+          ..write('rating: $rating, ')
+          ..write('themes: $themes, ')
+          ..write('fetchedAt: $fetchedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -3613,6 +4277,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $PositionEvalsTable positionEvals = $PositionEvalsTable(this);
   late final $LinkedAccountsTable linkedAccounts = $LinkedAccountsTable(this);
   late final $PuzzleAttemptsTable puzzleAttempts = $PuzzleAttemptsTable(this);
+  late final $DeletedGamesTable deletedGames = $DeletedGamesTable(this);
+  late final $CachedPuzzlesTable cachedPuzzles = $CachedPuzzlesTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -3623,6 +4289,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     positionEvals,
     linkedAccounts,
     puzzleAttempts,
+    deletedGames,
+    cachedPuzzles,
   ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules([
@@ -3667,6 +4335,7 @@ typedef $$GamesTableCreateCompanionBuilder = GamesCompanion Function({
   Value<DateTime?> analyzedAt,
   Value<int?> analysisDepth,
   Value<int> analysisVersion,
+  Value<int?> updatedAt,
   Value<double?> whiteAccuracy,
   Value<double?> blackAccuracy,
   Value<int> rowid,
@@ -3695,6 +4364,7 @@ typedef $$GamesTableUpdateCompanionBuilder = GamesCompanion Function({
   Value<DateTime?> analyzedAt,
   Value<int?> analysisDepth,
   Value<int> analysisVersion,
+  Value<int?> updatedAt,
   Value<double?> whiteAccuracy,
   Value<double?> blackAccuracy,
   Value<int> rowid,
@@ -3861,6 +4531,11 @@ class $$GamesTableFilterComposer extends Composer<_$AppDatabase, $GamesTable> {
 
   ColumnFilters<int> get analysisVersion => $composableBuilder(
     column: $table.analysisVersion,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -4049,6 +4724,11 @@ class $$GamesTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<int> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<double> get whiteAccuracy => $composableBuilder(
     column: $table.whiteAccuracy,
     builder: (column) => ColumnOrderings(column),
@@ -4151,6 +4831,9 @@ class $$GamesTableAnnotationComposer
     column: $table.analysisVersion,
     builder: (column) => column,
   );
+
+  GeneratedColumn<int> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
 
   GeneratedColumn<double> get whiteAccuracy => $composableBuilder(
     column: $table.whiteAccuracy,
@@ -4267,6 +4950,7 @@ class $$GamesTableTableManager
                 Value<DateTime?> analyzedAt = const Value.absent(),
                 Value<int?> analysisDepth = const Value.absent(),
                 Value<int> analysisVersion = const Value.absent(),
+                Value<int?> updatedAt = const Value.absent(),
                 Value<double?> whiteAccuracy = const Value.absent(),
                 Value<double?> blackAccuracy = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
@@ -4294,6 +4978,7 @@ class $$GamesTableTableManager
                 analyzedAt: analyzedAt,
                 analysisDepth: analysisDepth,
                 analysisVersion: analysisVersion,
+                updatedAt: updatedAt,
                 whiteAccuracy: whiteAccuracy,
                 blackAccuracy: blackAccuracy,
                 rowid: rowid,
@@ -4323,6 +5008,7 @@ class $$GamesTableTableManager
                 Value<DateTime?> analyzedAt = const Value.absent(),
                 Value<int?> analysisDepth = const Value.absent(),
                 Value<int> analysisVersion = const Value.absent(),
+                Value<int?> updatedAt = const Value.absent(),
                 Value<double?> whiteAccuracy = const Value.absent(),
                 Value<double?> blackAccuracy = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
@@ -4350,6 +5036,7 @@ class $$GamesTableTableManager
                 analyzedAt: analyzedAt,
                 analysisDepth: analysisDepth,
                 analysisVersion: analysisVersion,
+                updatedAt: updatedAt,
                 whiteAccuracy: whiteAccuracy,
                 blackAccuracy: blackAccuracy,
                 rowid: rowid,
@@ -5795,6 +6482,386 @@ typedef $$PuzzleAttemptsTableProcessedTableManager =
       PuzzleAttemptRow,
       PrefetchHooks Function({bool gameId})
     >;
+typedef $$DeletedGamesTableCreateCompanionBuilder =
+    DeletedGamesCompanion Function({
+      required String id,
+      required int deletedAt,
+      Value<int> rowid,
+    });
+typedef $$DeletedGamesTableUpdateCompanionBuilder =
+    DeletedGamesCompanion Function({
+      Value<String> id,
+      Value<int> deletedAt,
+      Value<int> rowid,
+    });
+
+class $$DeletedGamesTableFilterComposer
+    extends Composer<_$AppDatabase, $DeletedGamesTable> {
+  $$DeletedGamesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$DeletedGamesTableOrderingComposer
+    extends Composer<_$AppDatabase, $DeletedGamesTable> {
+  $$DeletedGamesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$DeletedGamesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $DeletedGamesTable> {
+  $$DeletedGamesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<int> get deletedAt =>
+      $composableBuilder(column: $table.deletedAt, builder: (column) => column);
+}
+
+class $$DeletedGamesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $DeletedGamesTable,
+          DeletedGameRow,
+          $$DeletedGamesTableFilterComposer,
+          $$DeletedGamesTableOrderingComposer,
+          $$DeletedGamesTableAnnotationComposer,
+          $$DeletedGamesTableCreateCompanionBuilder,
+          $$DeletedGamesTableUpdateCompanionBuilder,
+          (
+            DeletedGameRow,
+            BaseReferences<_$AppDatabase, $DeletedGamesTable, DeletedGameRow>,
+          ),
+          DeletedGameRow,
+          PrefetchHooks Function()
+        > {
+  $$DeletedGamesTableTableManager(_$AppDatabase db, $DeletedGamesTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$DeletedGamesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$DeletedGamesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$DeletedGamesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<int> deletedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => DeletedGamesCompanion(
+                id: id,
+                deletedAt: deletedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required int deletedAt,
+                Value<int> rowid = const Value.absent(),
+              }) => DeletedGamesCompanion.insert(
+                id: id,
+                deletedAt: deletedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$DeletedGamesTable, DeletedGameRow>(table),
+                  BaseReferences<
+                    _$AppDatabase,
+                    $DeletedGamesTable,
+                    DeletedGameRow
+                  >(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$DeletedGamesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $DeletedGamesTable,
+      DeletedGameRow,
+      $$DeletedGamesTableFilterComposer,
+      $$DeletedGamesTableOrderingComposer,
+      $$DeletedGamesTableAnnotationComposer,
+      $$DeletedGamesTableCreateCompanionBuilder,
+      $$DeletedGamesTableUpdateCompanionBuilder,
+      (
+        DeletedGameRow,
+        BaseReferences<_$AppDatabase, $DeletedGamesTable, DeletedGameRow>,
+      ),
+      DeletedGameRow,
+      PrefetchHooks Function()
+    >;
+typedef $$CachedPuzzlesTableCreateCompanionBuilder =
+    CachedPuzzlesCompanion Function({
+      required String id,
+      required String fen,
+      required String moves,
+      required int rating,
+      required String themes,
+      required DateTime fetchedAt,
+      Value<int> rowid,
+    });
+typedef $$CachedPuzzlesTableUpdateCompanionBuilder =
+    CachedPuzzlesCompanion Function({
+      Value<String> id,
+      Value<String> fen,
+      Value<String> moves,
+      Value<int> rating,
+      Value<String> themes,
+      Value<DateTime> fetchedAt,
+      Value<int> rowid,
+    });
+
+class $$CachedPuzzlesTableFilterComposer
+    extends Composer<_$AppDatabase, $CachedPuzzlesTable> {
+  $$CachedPuzzlesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get fen => $composableBuilder(
+    column: $table.fen,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get moves => $composableBuilder(
+    column: $table.moves,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get rating => $composableBuilder(
+    column: $table.rating,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get themes => $composableBuilder(
+    column: $table.themes,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get fetchedAt => $composableBuilder(
+    column: $table.fetchedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$CachedPuzzlesTableOrderingComposer
+    extends Composer<_$AppDatabase, $CachedPuzzlesTable> {
+  $$CachedPuzzlesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get fen => $composableBuilder(
+    column: $table.fen,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get moves => $composableBuilder(
+    column: $table.moves,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get rating => $composableBuilder(
+    column: $table.rating,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get themes => $composableBuilder(
+    column: $table.themes,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get fetchedAt => $composableBuilder(
+    column: $table.fetchedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$CachedPuzzlesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $CachedPuzzlesTable> {
+  $$CachedPuzzlesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get fen =>
+      $composableBuilder(column: $table.fen, builder: (column) => column);
+
+  GeneratedColumn<String> get moves =>
+      $composableBuilder(column: $table.moves, builder: (column) => column);
+
+  GeneratedColumn<int> get rating =>
+      $composableBuilder(column: $table.rating, builder: (column) => column);
+
+  GeneratedColumn<String> get themes =>
+      $composableBuilder(column: $table.themes, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get fetchedAt =>
+      $composableBuilder(column: $table.fetchedAt, builder: (column) => column);
+}
+
+class $$CachedPuzzlesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $CachedPuzzlesTable,
+          CachedPuzzleRow,
+          $$CachedPuzzlesTableFilterComposer,
+          $$CachedPuzzlesTableOrderingComposer,
+          $$CachedPuzzlesTableAnnotationComposer,
+          $$CachedPuzzlesTableCreateCompanionBuilder,
+          $$CachedPuzzlesTableUpdateCompanionBuilder,
+          (
+            CachedPuzzleRow,
+            BaseReferences<_$AppDatabase, $CachedPuzzlesTable, CachedPuzzleRow>,
+          ),
+          CachedPuzzleRow,
+          PrefetchHooks Function()
+        > {
+  $$CachedPuzzlesTableTableManager(_$AppDatabase db, $CachedPuzzlesTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$CachedPuzzlesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$CachedPuzzlesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$CachedPuzzlesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> fen = const Value.absent(),
+                Value<String> moves = const Value.absent(),
+                Value<int> rating = const Value.absent(),
+                Value<String> themes = const Value.absent(),
+                Value<DateTime> fetchedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => CachedPuzzlesCompanion(
+                id: id,
+                fen: fen,
+                moves: moves,
+                rating: rating,
+                themes: themes,
+                fetchedAt: fetchedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String fen,
+                required String moves,
+                required int rating,
+                required String themes,
+                required DateTime fetchedAt,
+                Value<int> rowid = const Value.absent(),
+              }) => CachedPuzzlesCompanion.insert(
+                id: id,
+                fen: fen,
+                moves: moves,
+                rating: rating,
+                themes: themes,
+                fetchedAt: fetchedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$CachedPuzzlesTable, CachedPuzzleRow>(table),
+                  BaseReferences<
+                    _$AppDatabase,
+                    $CachedPuzzlesTable,
+                    CachedPuzzleRow
+                  >(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$CachedPuzzlesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $CachedPuzzlesTable,
+      CachedPuzzleRow,
+      $$CachedPuzzlesTableFilterComposer,
+      $$CachedPuzzlesTableOrderingComposer,
+      $$CachedPuzzlesTableAnnotationComposer,
+      $$CachedPuzzlesTableCreateCompanionBuilder,
+      $$CachedPuzzlesTableUpdateCompanionBuilder,
+      (
+        CachedPuzzleRow,
+        BaseReferences<_$AppDatabase, $CachedPuzzlesTable, CachedPuzzleRow>,
+      ),
+      CachedPuzzleRow,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -5809,4 +6876,8 @@ class $AppDatabaseManager {
       $$LinkedAccountsTableTableManager(_db, _db.linkedAccounts);
   $$PuzzleAttemptsTableTableManager get puzzleAttempts =>
       $$PuzzleAttemptsTableTableManager(_db, _db.puzzleAttempts);
+  $$DeletedGamesTableTableManager get deletedGames =>
+      $$DeletedGamesTableTableManager(_db, _db.deletedGames);
+  $$CachedPuzzlesTableTableManager get cachedPuzzles =>
+      $$CachedPuzzlesTableTableManager(_db, _db.cachedPuzzles);
 }

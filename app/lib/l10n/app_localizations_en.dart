@@ -815,4 +815,209 @@ class AppLocalizationsEn extends AppLocalizations {
   String botError(String message) {
     return 'The bot could not move: $message';
   }
+
+  @override
+  String get signInTitle => 'Sign in';
+
+  @override
+  String get signInSubtitle =>
+      'Sync your games, reports and puzzle rating across devices.';
+
+  @override
+  String get guestNote =>
+      'You\'re playing as a guest. Everything stays on this device until you sign in.';
+
+  @override
+  String get emailLabel => 'Email';
+
+  @override
+  String get passwordLabel => 'Password';
+
+  @override
+  String get passwordHint => 'At least 8 characters';
+
+  @override
+  String get displayNameLabel => 'Display name (optional)';
+
+  @override
+  String get signInButton => 'Sign in';
+
+  @override
+  String get createAccountButton => 'Create account';
+
+  @override
+  String get switchToRegister => 'New here? Create an account';
+
+  @override
+  String get switchToSignIn => 'Already have an account? Sign in';
+
+  @override
+  String get continueWithGoogle => 'Continue with Google';
+
+  @override
+  String get continueWithApple => 'Continue with Apple';
+
+  @override
+  String get socialSoon =>
+      'Google and Apple sign-in will be switched on once the app is registered with them.';
+
+  @override
+  String get signOut => 'Sign out';
+
+  @override
+  String get puzzleRatingLabel => 'Puzzle rating';
+
+  @override
+  String puzzlesPlayedCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count rated puzzles',
+      one: '1 rated puzzle',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get syncTitle => 'Sync';
+
+  @override
+  String get syncing => 'Syncing…';
+
+  @override
+  String syncDone(int sent, int received) {
+    return 'Synced: $sent sent, $received received';
+  }
+
+  @override
+  String syncFailed(String message) {
+    return 'Sync failed: $message';
+  }
+
+  @override
+  String get serverOffline =>
+      'Can\'t reach the server. Your data is safe on this device.';
+
+  @override
+  String get errEmailTaken => 'An account with this email already exists.';
+
+  @override
+  String get errInvalidCredentials => 'Wrong email or password.';
+
+  @override
+  String get errRateLimited => 'Too many tries. Wait a minute and try again.';
+
+  @override
+  String errGeneric(String message) {
+    return 'Something went wrong: $message';
+  }
+
+  @override
+  String get editName => 'Change name';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String importingOnServer(int count) {
+    return 'Importing on the server… $count games so far';
+  }
+
+  @override
+  String get dailyPuzzle => 'Daily puzzle';
+
+  @override
+  String get dailyPuzzleBody => 'The same puzzle for everyone, every day.';
+
+  @override
+  String get ratedPuzzles => 'Rated puzzles';
+
+  @override
+  String get ratedPuzzlesBody =>
+      'Millions of puzzles from the Lichess database, matched to your rating.';
+
+  @override
+  String get signInForRated =>
+      'Sign in to play rated puzzles and keep a puzzle rating.';
+
+  @override
+  String get puzzleRush => 'Puzzle Rush';
+
+  @override
+  String get puzzleRushBody =>
+      'Solve as many as you can. Three mistakes and you are out.';
+
+  @override
+  String get rush3min => '3 min';
+
+  @override
+  String get rush5min => '5 min';
+
+  @override
+  String get rushSurvival => 'Survival';
+
+  @override
+  String rushScore(int score) {
+    return 'Score $score';
+  }
+
+  @override
+  String rushBest(int best) {
+    return 'Best $best';
+  }
+
+  @override
+  String get rushNewBest => 'New best!';
+
+  @override
+  String get rushTimeUp => 'Time\'s up!';
+
+  @override
+  String get rushStruckOut => 'Three strikes!';
+
+  @override
+  String get rushPlayAgain => 'Play again';
+
+  @override
+  String findBestMove(String side) {
+    return 'Find the best move for $side';
+  }
+
+  @override
+  String get puzzleCorrect => 'Correct!';
+
+  @override
+  String ratingChange(int rating, String delta) {
+    return 'Rating $rating ($delta)';
+  }
+
+  @override
+  String get puzzleNotRated => 'Already played: not rated again.';
+
+  @override
+  String get offlinePack => 'Offline pack';
+
+  @override
+  String offlinePackBody(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count puzzles saved on this device.',
+      one: '1 puzzle saved on this device.',
+      zero: 'No puzzles saved yet. Download some to play Puzzle Rush without internet.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get downloadPack => 'Download 100 puzzles';
+
+  @override
+  String get playingOffline => 'Offline: playing puzzles saved on this device.';
+
+  @override
+  String get puzzlesUnavailable => 'Couldn\'t load puzzles from the server.';
+
+  @override
+  String get nextPuzzle => 'Next puzzle';
 }

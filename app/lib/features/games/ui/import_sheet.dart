@@ -4,10 +4,14 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 
+import '../../../core/api/api_client.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/theme/tokens.dart';
 import '../../../core/widgets/chunky_button.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../account/account.dart';
+import '../../account/server_imports.dart';
+import '../../sync/sync_controller.dart';
 import '../data/game_repository.dart';
 import '../data/import_service.dart';
 import '../data/online_import.dart';
@@ -159,6 +163,9 @@ class _AccountTileState extends ConsumerState<AccountTile> {
   final _name = TextEditingController();
   int? _progress;
 
+  /// The running import happens on the server (signed in).
+  bool _onServer = false;
+
   String get _label =>
       widget.provider == GameSource.lichess ? 'Lichess' : 'Chess.com';
 
@@ -172,6 +179,9 @@ class _AccountTileState extends ConsumerState<AccountTile> {
     final l10n = AppLocalizations.of(context);
     final messenger = ScaffoldMessenger.of(context);
     setState(() => _progress = 0);
+    if (ref.read(accountProvider).signedIn && await _syncOnServer(messenger)) {
+      return;
+    }
     try {
       final r = await ref
           .read(importServiceProvider)
@@ -192,6 +202,54 @@ class _AccountTileState extends ConsumerState<AccountTile> {
       messenger.showSnackBar(SnackBar(content: Text(l10n.importFailed('$e'))));
     } finally {
       if (mounted) setState(() => _progress = null);
+    }
+  }
+
+  /// Imports through the server so every device gets the games. Returns
+  /// false (to fall back to importing here) when the server is unreachable.
+  Future<bool> _syncOnServer(ScaffoldMessengerState messenger) async {
+    final l10n = AppLocalizations.of(context);
+    final repo = ref.read(gameRepositoryProvider);
+    final imports = ref.read(serverImportsProvider);
+    setState(() => _onServer = true);
+    try {
+      final account = await repo.account(widget.provider);
+      if (account == null) return true;
+      await imports.link(widget.provider, account.username);
+      final n = await imports.run(
+        widget.provider,
+        onProgress: (n) {
+          if (mounted) setState(() => _progress = n);
+        },
+      );
+      await ref.read(syncProvider.notifier).sync();
+      await repo.markSynced(widget.provider, null);
+      messenger.showSnackBar(SnackBar(content: Text(l10n.importResult(n))));
+      return true;
+    } on ApiException catch (e) {
+      if (e.isNetwork) return false;
+      messenger.showSnackBar(
+        SnackBar(content: Text(l10n.importFailed(e.message))),
+      );
+      return true;
+    } finally {
+      if (mounted) {
+        setState(() {
+          _onServer = false;
+          _progress = null;
+        });
+      }
+    }
+  }
+
+  Future<void> _unlink() async {
+    await ref.read(gameRepositoryProvider).unlinkAccount(widget.provider);
+    if (ref.read(accountProvider).signedIn) {
+      try {
+        await ref.read(serverImportsProvider).unlink(widget.provider);
+      } on ApiException {
+        // Offline: unlinked here; the server keeps its copy for now.
+      }
     }
   }
 
@@ -249,7 +307,9 @@ class _AccountTileState extends ConsumerState<AccountTile> {
                         ),
                         Text(
                           busy
-                              ? l10n.importingCount(_progress!)
+                              ? (_onServer
+                                    ? l10n.importingOnServer(_progress!)
+                                    : l10n.importingCount(_progress!))
                               : account.lastSyncedAt == null
                               ? l10n.neverSynced
                               : l10n.lastSynced(
@@ -276,9 +336,7 @@ class _AccountTileState extends ConsumerState<AccountTile> {
                     IconButton(
                       tooltip: l10n.unlinkAccount,
                       icon: const Icon(Icons.link_off_rounded),
-                      onPressed: () => ref
-                          .read(gameRepositoryProvider)
-                          .unlinkAccount(widget.provider),
+                      onPressed: _unlink,
                     ),
                   ],
                 ],

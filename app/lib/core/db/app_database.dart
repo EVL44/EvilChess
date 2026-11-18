@@ -36,6 +36,10 @@ class Games extends Table {
   /// Version of the analysis rules the stored rows were produced with
   /// (see `kAnalysisVersion`); older rows are upgraded without the engine.
   IntColumn get analysisVersion => integer().withDefault(const Constant(0))();
+
+  /// Last local change (import, analysis, colour), in milliseconds since
+  /// the epoch — drives sync pushes. (Drift dates only keep seconds.)
+  IntColumn get updatedAt => integer().named('updated_at_ms').nullable()();
   RealColumn get whiteAccuracy => real().nullable()();
   RealColumn get blackAccuracy => real().nullable()();
 
@@ -130,14 +134,50 @@ class LinkedAccounts extends Table {
   Set<Column<Object>> get primaryKey => {provider};
 }
 
+/// Games deleted on this device, so the deletion reaches other devices.
+@DataClassName('DeletedGameRow')
+class DeletedGames extends Table {
+  TextColumn get id => text()();
+
+  /// Milliseconds since the epoch.
+  IntColumn get deletedAt => integer().named('deleted_at_ms')();
+
+  @override
+  Set<Column<Object>> get primaryKey => {id};
+}
+
+/// Lichess puzzles kept on the device for offline Puzzle Rush.
+@DataClassName('CachedPuzzleRow')
+class CachedPuzzles extends Table {
+  TextColumn get id => text()();
+  TextColumn get fen => text()();
+
+  /// UCI moves, space separated; the first is the opponent's.
+  TextColumn get moves => text()();
+  IntColumn get rating => integer()();
+  TextColumn get themes => text()();
+  DateTimeColumn get fetchedAt => dateTime()();
+
+  @override
+  Set<Column<Object>> get primaryKey => {id};
+}
+
 @DriftDatabase(
-  tables: [Games, MoveAnalyses, PositionEvals, LinkedAccounts, PuzzleAttempts],
+  tables: [
+    Games,
+    MoveAnalyses,
+    PositionEvals,
+    LinkedAccounts,
+    PuzzleAttempts,
+    DeletedGames,
+    CachedPuzzles,
+  ],
 )
 class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? executor]) : super(executor ?? _openConnection());
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -152,6 +192,11 @@ class AppDatabase extends _$AppDatabase {
         await m.addColumn(moveAnalyses, moveAnalyses.opportunity);
         await m.addColumn(moveAnalyses, moveAnalyses.category);
         await m.createTable(puzzleAttempts);
+      }
+      if (from < 3) {
+        await m.addColumn(games, games.updatedAt);
+        await m.createTable(deletedGames);
+        await m.createTable(cachedPuzzles);
       }
     },
     onCreate: (m) async {

@@ -821,4 +821,214 @@ class AppLocalizationsAr extends AppLocalizations {
   String botError(String message) {
     return 'تعذّر على الروبوت اللعب: $message';
   }
+
+  @override
+  String get signInTitle => 'تسجيل الدخول';
+
+  @override
+  String get signInSubtitle =>
+      'زامن مبارياتك وتقاريرك وتصنيف الألغاز عبر أجهزتك.';
+
+  @override
+  String get guestNote =>
+      'أنت تلعب كضيف. يبقى كل شيء على هذا الجهاز حتى تسجّل الدخول.';
+
+  @override
+  String get emailLabel => 'البريد الإلكتروني';
+
+  @override
+  String get passwordLabel => 'كلمة المرور';
+
+  @override
+  String get passwordHint => '8 أحرف على الأقل';
+
+  @override
+  String get displayNameLabel => 'الاسم المعروض (اختياري)';
+
+  @override
+  String get signInButton => 'دخول';
+
+  @override
+  String get createAccountButton => 'إنشاء حساب';
+
+  @override
+  String get switchToRegister => 'جديد هنا؟ أنشئ حسابًا';
+
+  @override
+  String get switchToSignIn => 'لديك حساب؟ سجّل الدخول';
+
+  @override
+  String get continueWithGoogle => 'المتابعة باستخدام Google';
+
+  @override
+  String get continueWithApple => 'المتابعة باستخدام Apple';
+
+  @override
+  String get socialSoon =>
+      'سيُفعَّل تسجيل الدخول عبر Google وApple بعد تسجيل التطبيق لديهما.';
+
+  @override
+  String get signOut => 'تسجيل الخروج';
+
+  @override
+  String get puzzleRatingLabel => 'تصنيف الألغاز';
+
+  @override
+  String puzzlesPlayedCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count لغز مصنّف',
+      many: '$count لغزًا مصنّفًا',
+      few: '$count ألغاز مصنّفة',
+      two: 'لغزان مصنّفان',
+      one: 'لغز مصنّف واحد',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get syncTitle => 'المزامنة';
+
+  @override
+  String get syncing => 'جارٍ المزامنة…';
+
+  @override
+  String syncDone(int sent, int received) {
+    return 'تمت المزامنة: أُرسل $sent واستُلم $received';
+  }
+
+  @override
+  String syncFailed(String message) {
+    return 'فشلت المزامنة: $message';
+  }
+
+  @override
+  String get serverOffline =>
+      'تعذّر الوصول إلى الخادم. بياناتك آمنة على هذا الجهاز.';
+
+  @override
+  String get errEmailTaken => 'يوجد حساب بهذا البريد بالفعل.';
+
+  @override
+  String get errInvalidCredentials => 'البريد أو كلمة المرور غير صحيحة.';
+
+  @override
+  String get errRateLimited => 'محاولات كثيرة. انتظر دقيقة ثم حاول مجددًا.';
+
+  @override
+  String errGeneric(String message) {
+    return 'حدث خطأ: $message';
+  }
+
+  @override
+  String get editName => 'تغيير الاسم';
+
+  @override
+  String get save => 'حفظ';
+
+  @override
+  String importingOnServer(int count) {
+    return 'جارٍ الاستيراد على الخادم… $count مباراة حتى الآن';
+  }
+
+  @override
+  String get dailyPuzzle => 'لغز اليوم';
+
+  @override
+  String get dailyPuzzleBody => 'اللغز نفسه للجميع كل يوم.';
+
+  @override
+  String get ratedPuzzles => 'ألغاز مصنّفة';
+
+  @override
+  String get ratedPuzzlesBody =>
+      'ملايين الألغاز من قاعدة بيانات Lichess تناسب تصنيفك.';
+
+  @override
+  String get signInForRated =>
+      'سجّل الدخول لتلعب ألغازًا مصنّفة وتحصل على تصنيف.';
+
+  @override
+  String get puzzleRush => 'Puzzle Rush';
+
+  @override
+  String get puzzleRushBody => 'حلّ أكبر عدد ممكن. ثلاثة أخطاء وتنتهي اللعبة.';
+
+  @override
+  String get rush3min => '3 دقائق';
+
+  @override
+  String get rush5min => '5 دقائق';
+
+  @override
+  String get rushSurvival => 'البقاء';
+
+  @override
+  String rushScore(int score) {
+    return 'النتيجة $score';
+  }
+
+  @override
+  String rushBest(int best) {
+    return 'الأفضل $best';
+  }
+
+  @override
+  String get rushNewBest => 'رقم قياسي جديد!';
+
+  @override
+  String get rushTimeUp => 'انتهى الوقت!';
+
+  @override
+  String get rushStruckOut => 'ثلاثة أخطاء!';
+
+  @override
+  String get rushPlayAgain => 'العب مجددًا';
+
+  @override
+  String findBestMove(String side) {
+    return 'ابحث عن أفضل نقلة لصالح $side';
+  }
+
+  @override
+  String get puzzleCorrect => 'صحيح!';
+
+  @override
+  String ratingChange(int rating, String delta) {
+    return 'التصنيف $rating ($delta)';
+  }
+
+  @override
+  String get puzzleNotRated => 'لُعب من قبل: لن يُحتسب مجددًا.';
+
+  @override
+  String get offlinePack => 'حزمة بلا إنترنت';
+
+  @override
+  String offlinePackBody(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count لغز محفوظ على هذا الجهاز.',
+      many: '$count لغزًا محفوظًا على هذا الجهاز.',
+      few: '$count ألغاز محفوظة على هذا الجهاز.',
+      two: 'لغزان محفوظان على هذا الجهاز.',
+      one: 'لغز واحد محفوظ على هذا الجهاز.',
+      zero: 'لا ألغاز محفوظة بعد. نزّل بعضها للعب بلا إنترنت.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get downloadPack => 'تنزيل 100 لغز';
+
+  @override
+  String get playingOffline => 'بلا إنترنت: ألغاز محفوظة على هذا الجهاز.';
+
+  @override
+  String get puzzlesUnavailable => 'تعذّر تحميل الألغاز من الخادم.';
+
+  @override
+  String get nextPuzzle => 'اللغز التالي';
 }

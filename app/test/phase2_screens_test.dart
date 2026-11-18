@@ -111,6 +111,8 @@ void main() {
     await waitFor(tester, find.text('0 of 2 solved'));
     expect(find.text('Train a weakness'), findsOneWidget);
 
+    await tester.ensureVisible(find.byKey(const Key('start-puzzles')));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('start-puzzles')));
     await waitFor(tester, find.text('1 / 2'));
     expect(find.textContaining('You played'), findsOneWidget);

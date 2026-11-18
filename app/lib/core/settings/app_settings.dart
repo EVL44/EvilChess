@@ -41,8 +41,13 @@ final appSettingsProvider =
 
 /// Reads and persists user-facing app settings (theme, language).
 class AppSettingsController extends Notifier<AppSettings> {
-  static const _kTheme = 'settings.themeMode';
-  static const _kLocale = 'settings.locale';
+  static const themeKey = 'settings.themeMode';
+  static const localeKey = 'settings.locale';
+
+  /// When the user last changed a synced setting (ms since epoch).
+  static const updatedAtKey = 'settings.updatedAt';
+  static const _kTheme = themeKey;
+  static const _kLocale = localeKey;
 
   SharedPreferences get _prefs => ref.read(sharedPreferencesProvider);
 
@@ -62,7 +67,14 @@ class AppSettingsController extends Notifier<AppSettings> {
   Future<void> setThemeMode(ThemeMode mode) async {
     state = state.copyWith(themeMode: mode);
     await _prefs.setString(_kTheme, mode.name);
+    await _touch();
   }
+
+  Future<void> _touch() =>
+      _prefs.setInt(updatedAtKey, DateTime.now().millisecondsSinceEpoch);
+
+  /// Re-reads settings after sync changed them.
+  void reload() => ref.invalidateSelf();
 
   /// Pass `null` to follow the system language.
   Future<void> setLocale(Locale? locale) async {
@@ -72,5 +84,6 @@ class AppSettingsController extends Notifier<AppSettings> {
     } else {
       await _prefs.setString(_kLocale, locale.languageCode);
     }
+    await _touch();
   }
 }

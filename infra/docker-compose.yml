@@ -11,7 +11,8 @@ services:
       POSTGRES_USER: evilchess
       POSTGRES_PASSWORD: evilchess   # local development only
     ports:
-      - "5432:5432"
+      # Change EVILCHESS_DB_PORT if another PostgreSQL already uses 5432.
+      - "${EVILCHESS_DB_PORT:-5432}:5432"
     volumes:
       - db-data:/var/lib/postgresql/data
     healthcheck:
@@ -23,7 +24,7 @@ services:
   redis:
     image: redis:7-alpine
     ports:
-      - "6379:6379"
+      - "${EVILCHESS_REDIS_PORT:-6379}:6379"
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 5s
@@ -38,6 +39,14 @@ services:
       DB_USER: evilchess
       DB_PASSWORD: evilchess
       REDIS_HOST: redis
+      # Signing key for access tokens. Set a long random value outside dev.
+      EVILCHESS_JWT_SECRET: ${EVILCHESS_JWT_SECRET:-dev-only-secret-change-me-0123456789abcdef}
+      EVILCHESS_GOOGLE_CLIENT_IDS: ${EVILCHESS_GOOGLE_CLIENT_IDS:-}
+      EVILCHESS_APPLE_CLIENT_IDS: ${EVILCHESS_APPLE_CLIENT_IDS:-}
+      # One-off puzzle import, e.g. /data/lichess_db_puzzle.csv.zst (see README).
+      EVILCHESS_PUZZLES_IMPORT: ${EVILCHESS_PUZZLES_IMPORT:-}
+    volumes:
+      - ../data:/data:ro
     ports:
       - "8080:8080"
     depends_on:

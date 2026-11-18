@@ -484,5 +484,136 @@
         "type": "String"
       }
     }
-  }
+  },
+  "signInTitle": "Sign in",
+  "signInSubtitle": "Sync your games, reports and puzzle rating across devices.",
+  "guestNote": "You're playing as a guest. Everything stays on this device until you sign in.",
+  "emailLabel": "Email",
+  "passwordLabel": "Password",
+  "passwordHint": "At least 8 characters",
+  "displayNameLabel": "Display name (optional)",
+  "signInButton": "Sign in",
+  "createAccountButton": "Create account",
+  "switchToRegister": "New here? Create an account",
+  "switchToSignIn": "Already have an account? Sign in",
+  "continueWithGoogle": "Continue with Google",
+  "continueWithApple": "Continue with Apple",
+  "socialSoon": "Google and Apple sign-in will be switched on once the app is registered with them.",
+  "signOut": "Sign out",
+  "puzzleRatingLabel": "Puzzle rating",
+  "puzzlesPlayedCount": "{count, plural, =1{1 rated puzzle} other{{count} rated puzzles}}",
+  "@puzzlesPlayedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "syncTitle": "Sync",
+  "syncing": "Syncing…",
+  "syncDone": "Synced: {sent} sent, {received} received",
+  "@syncDone": {
+    "placeholders": {
+      "sent": {
+        "type": "int"
+      },
+      "received": {
+        "type": "int"
+      }
+    }
+  },
+  "syncFailed": "Sync failed: {message}",
+  "@syncFailed": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "serverOffline": "Can't reach the server. Your data is safe on this device.",
+  "errEmailTaken": "An account with this email already exists.",
+  "errInvalidCredentials": "Wrong email or password.",
+  "errRateLimited": "Too many tries. Wait a minute and try again.",
+  "errGeneric": "Something went wrong: {message}",
+  "@errGeneric": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "editName": "Change name",
+  "save": "Save",
+  "importingOnServer": "Importing on the server… {count} games so far",
+  "@importingOnServer": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "dailyPuzzle": "Daily puzzle",
+  "dailyPuzzleBody": "The same puzzle for everyone, every day.",
+  "ratedPuzzles": "Rated puzzles",
+  "ratedPuzzlesBody": "Millions of puzzles from the Lichess database, matched to your rating.",
+  "signInForRated": "Sign in to play rated puzzles and keep a puzzle rating.",
+  "puzzleRush": "Puzzle Rush",
+  "puzzleRushBody": "Solve as many as you can. Three mistakes and you are out.",
+  "rush3min": "3 min",
+  "rush5min": "5 min",
+  "rushSurvival": "Survival",
+  "rushScore": "Score {score}",
+  "@rushScore": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "rushBest": "Best {best}",
+  "@rushBest": {
+    "placeholders": {
+      "best": {
+        "type": "int"
+      }
+    }
+  },
+  "rushNewBest": "New best!",
+  "rushTimeUp": "Time's up!",
+  "rushStruckOut": "Three strikes!",
+  "rushPlayAgain": "Play again",
+  "findBestMove": "Find the best move for {side}",
+  "@findBestMove": {
+    "placeholders": {
+      "side": {
+        "type": "String"
+      }
+    }
+  },
+  "puzzleCorrect": "Correct!",
+  "ratingChange": "Rating {rating} ({delta})",
+  "@ratingChange": {
+    "placeholders": {
+      "rating": {
+        "type": "int"
+      },
+      "delta": {
+        "type": "String"
+      }
+    }
+  },
+  "puzzleNotRated": "Already played: not rated again.",
+  "offlinePack": "Offline pack",
+  "offlinePackBody": "{count, plural, =0{No puzzles saved yet. Download some to play Puzzle Rush without internet.} =1{1 puzzle saved on this device.} other{{count} puzzles saved on this device.}}",
+  "@offlinePackBody": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "downloadPack": "Download 100 puzzles",
+  "playingOffline": "Offline: playing puzzles saved on this device.",
+  "puzzlesUnavailable": "Couldn't load puzzles from the server.",
+  "nextPuzzle": "Next puzzle"
 }
