@@ -80,6 +80,18 @@ class UciInfo {
   }
 }
 
+/// One candidate move from a MultiPV search.
+@immutable
+class EngineLine {
+  const EngineLine({required this.uci, required this.eval});
+
+  /// First move of the line, standard UCI.
+  final String uci;
+
+  /// Score after this move, from White's point of view.
+  final Eval eval;
+}
+
 /// Talks UCI to an engine over a [UciTransport]. Searches are serialized:
 /// a new [evaluate] call waits for the previous one to finish.
 class UciEngine {
@@ -129,6 +141,33 @@ class UciEngine {
     String fen, {
     required int depth,
     int multiPv = 2,
+  }) async => (await _run(fen, depth: depth, multiPv: multiPv)).done.future;
+
+  /// Searches [fen] and returns up to [multiPv] candidate moves, best first,
+  /// each with its White-POV score. Empty when there is no legal move.
+  Future<List<EngineLine>> lines(
+    String fen, {
+    required int depth,
+    required int multiPv,
+  }) async {
+    final search = await _run(fen, depth: depth, multiPv: multiPv);
+    await search.done.future;
+    final keys = search.lines.keys.toList()..sort();
+    return [
+      for (final k in keys)
+        if (search.lines[k]!.pv.isNotEmpty)
+          EngineLine(
+            uci: search.lines[k]!.pv.first,
+            eval: search.lines[k]!.toWhiteEval(whiteToMove: search.whiteToMove),
+          ),
+    ];
+  }
+
+  /// Runs one search and returns it once finished.
+  Future<_Search> _run(
+    String fen, {
+    required int depth,
+    required int multiPv,
   }) => _enqueue(() async {
     if (!_initialized) await init();
     if (multiPv != _multiPv) {
@@ -142,7 +181,8 @@ class UciEngine {
     _transport.send('position fen $fen');
     _transport.send('go depth $depth');
     try {
-      return await search.done.future;
+      await search.done.future;
+      return search;
     } finally {
       _search = null;
     }

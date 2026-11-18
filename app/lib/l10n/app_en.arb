@@ -422,5 +422,67 @@
   },
   "otherModesSoon": "Rated puzzles, Puzzle Rush and the daily puzzle arrive with accounts.",
   "allMistakes": "All my mistakes",
-  "timeTroubleLabel": "Time trouble"
+  "timeTroubleLabel": "Time trouble",
+  "chooseOpponent": "Choose your opponent",
+  "botsSubtitle": "Bots with personalities, from total beginner to merciless.",
+  "botRating": "~{rating}",
+  "@botRating": {
+    "placeholders": {
+      "rating": {
+        "type": "int"
+      }
+    }
+  },
+  "botRatingNote": "Bot ratings are rough estimates.",
+  "styleBalanced": "Balanced",
+  "styleAggressive": "Aggressive",
+  "styleDefensive": "Defensive",
+  "styleTricky": "Tricky",
+  "styleMaterialistic": "Greedy",
+  "botBioPip": "Just learned how the horsey moves. Grabs anything that isn't nailed down.",
+  "botBioGremlina": "Loves a check, any check. Attacks first, thinks later.",
+  "botBioBramble": "Castles early, hides behind his pawns and waits for you to overreach.",
+  "botBioHex": "Sets little traps everywhere. Look twice before you take that pawn.",
+  "botBioGrimsby": "A club player of the old school: sound openings, solid moves, few gifts.",
+  "botBioVexa": "Sharp, fast and fearless. She will sacrifice to get at your king.",
+  "botBioWarlock": "Sees deep, gives nothing away and squeezes you slowly.",
+  "botBioMalakar": "Full-strength Stockfish. It does not blink. Good luck.",
+  "playAs": "Play as",
+  "randomSide": "Random",
+  "allowTakebacks": "Allow takebacks",
+  "playButton": "Play",
+  "botThinking": "{name} is thinking…",
+  "@botThinking": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "yourTurn": "Your move",
+  "you": "You",
+  "hint": "Hint",
+  "takeBack": "Take back",
+  "resign": "Resign",
+  "resignConfirm": "Resign this game?",
+  "youWon": "You won!",
+  "youLost": "You lost",
+  "gameDrawn": "Draw",
+  "endCheckmate": "by checkmate",
+  "endStalemate": "by stalemate",
+  "endInsufficient": "insufficient material",
+  "endThreefold": "threefold repetition",
+  "endFiftyMoves": "fifty-move rule",
+  "endResignation": "by resignation",
+  "reviewGame": "Review game",
+  "rematch": "Rematch",
+  "newOpponent": "New opponent",
+  "botError": "The bot could not move: {message}",
+  "@botError": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  }
 }

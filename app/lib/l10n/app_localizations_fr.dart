@@ -679,4 +679,142 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get timeTroubleLabel => 'Zeitnot';
+
+  @override
+  String get chooseOpponent => 'Choisissez votre adversaire';
+
+  @override
+  String get botsSubtitle =>
+      'Des bots avec du caractère, du grand débutant à l\'impitoyable.';
+
+  @override
+  String botRating(int rating) {
+    return '~$rating';
+  }
+
+  @override
+  String get botRatingNote => 'Les classements des bots sont approximatifs.';
+
+  @override
+  String get styleBalanced => 'Équilibré';
+
+  @override
+  String get styleAggressive => 'Agressif';
+
+  @override
+  String get styleDefensive => 'Défensif';
+
+  @override
+  String get styleTricky => 'Rusé';
+
+  @override
+  String get styleMaterialistic => 'Gourmand';
+
+  @override
+  String get botBioPip =>
+      'Vient d\'apprendre comment bouge le cheval. Prend tout ce qui traîne.';
+
+  @override
+  String get botBioGremlina =>
+      'Adore les échecs au roi, tous. Attaque d\'abord, réfléchit ensuite.';
+
+  @override
+  String get botBioBramble =>
+      'Roque tôt, se cache derrière ses pions et attend que vous en fassiez trop.';
+
+  @override
+  String get botBioHex =>
+      'Pose de petits pièges partout. Réfléchissez avant de prendre ce pion.';
+
+  @override
+  String get botBioGrimsby =>
+      'Un joueur de club à l\'ancienne : ouvertures saines, coups solides, peu de cadeaux.';
+
+  @override
+  String get botBioVexa =>
+      'Tranchante, rapide et sans peur. Elle sacrifiera pour atteindre votre roi.';
+
+  @override
+  String get botBioWarlock =>
+      'Voit loin, ne donne rien et vous étouffe lentement.';
+
+  @override
+  String get botBioMalakar =>
+      'Stockfish à pleine puissance. Il ne cligne jamais des yeux. Bonne chance.';
+
+  @override
+  String get playAs => 'Jouer avec';
+
+  @override
+  String get randomSide => 'Au hasard';
+
+  @override
+  String get allowTakebacks => 'Autoriser les reprises';
+
+  @override
+  String get playButton => 'Jouer';
+
+  @override
+  String botThinking(String name) {
+    return '$name réfléchit…';
+  }
+
+  @override
+  String get yourTurn => 'À vous de jouer';
+
+  @override
+  String get you => 'Vous';
+
+  @override
+  String get hint => 'Indice';
+
+  @override
+  String get takeBack => 'Reprendre';
+
+  @override
+  String get resign => 'Abandonner';
+
+  @override
+  String get resignConfirm => 'Abandonner cette partie ?';
+
+  @override
+  String get youWon => 'Vous avez gagné !';
+
+  @override
+  String get youLost => 'Vous avez perdu';
+
+  @override
+  String get gameDrawn => 'Partie nulle';
+
+  @override
+  String get endCheckmate => 'par mat';
+
+  @override
+  String get endStalemate => 'par pat';
+
+  @override
+  String get endInsufficient => 'matériel insuffisant';
+
+  @override
+  String get endThreefold => 'triple répétition';
+
+  @override
+  String get endFiftyMoves => 'règle des cinquante coups';
+
+  @override
+  String get endResignation => 'par abandon';
+
+  @override
+  String get reviewGame => 'Analyser la partie';
+
+  @override
+  String get rematch => 'Revanche';
+
+  @override
+  String get newOpponent => 'Nouvel adversaire';
+
+  @override
+  String botError(String message) {
+    return 'Le bot n\'a pas pu jouer : $message';
+  }
 }

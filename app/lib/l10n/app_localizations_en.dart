@@ -677,4 +677,142 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get timeTroubleLabel => 'Time trouble';
+
+  @override
+  String get chooseOpponent => 'Choose your opponent';
+
+  @override
+  String get botsSubtitle =>
+      'Bots with personalities, from total beginner to merciless.';
+
+  @override
+  String botRating(int rating) {
+    return '~$rating';
+  }
+
+  @override
+  String get botRatingNote => 'Bot ratings are rough estimates.';
+
+  @override
+  String get styleBalanced => 'Balanced';
+
+  @override
+  String get styleAggressive => 'Aggressive';
+
+  @override
+  String get styleDefensive => 'Defensive';
+
+  @override
+  String get styleTricky => 'Tricky';
+
+  @override
+  String get styleMaterialistic => 'Greedy';
+
+  @override
+  String get botBioPip =>
+      'Just learned how the horsey moves. Grabs anything that isn\'t nailed down.';
+
+  @override
+  String get botBioGremlina =>
+      'Loves a check, any check. Attacks first, thinks later.';
+
+  @override
+  String get botBioBramble =>
+      'Castles early, hides behind his pawns and waits for you to overreach.';
+
+  @override
+  String get botBioHex =>
+      'Sets little traps everywhere. Look twice before you take that pawn.';
+
+  @override
+  String get botBioGrimsby =>
+      'A club player of the old school: sound openings, solid moves, few gifts.';
+
+  @override
+  String get botBioVexa =>
+      'Sharp, fast and fearless. She will sacrifice to get at your king.';
+
+  @override
+  String get botBioWarlock =>
+      'Sees deep, gives nothing away and squeezes you slowly.';
+
+  @override
+  String get botBioMalakar =>
+      'Full-strength Stockfish. It does not blink. Good luck.';
+
+  @override
+  String get playAs => 'Play as';
+
+  @override
+  String get randomSide => 'Random';
+
+  @override
+  String get allowTakebacks => 'Allow takebacks';
+
+  @override
+  String get playButton => 'Play';
+
+  @override
+  String botThinking(String name) {
+    return '$name is thinking…';
+  }
+
+  @override
+  String get yourTurn => 'Your move';
+
+  @override
+  String get you => 'You';
+
+  @override
+  String get hint => 'Hint';
+
+  @override
+  String get takeBack => 'Take back';
+
+  @override
+  String get resign => 'Resign';
+
+  @override
+  String get resignConfirm => 'Resign this game?';
+
+  @override
+  String get youWon => 'You won!';
+
+  @override
+  String get youLost => 'You lost';
+
+  @override
+  String get gameDrawn => 'Draw';
+
+  @override
+  String get endCheckmate => 'by checkmate';
+
+  @override
+  String get endStalemate => 'by stalemate';
+
+  @override
+  String get endInsufficient => 'insufficient material';
+
+  @override
+  String get endThreefold => 'threefold repetition';
+
+  @override
+  String get endFiftyMoves => 'fifty-move rule';
+
+  @override
+  String get endResignation => 'by resignation';
+
+  @override
+  String get reviewGame => 'Review game';
+
+  @override
+  String get rematch => 'Rematch';
+
+  @override
+  String get newOpponent => 'New opponent';
+
+  @override
+  String botError(String message) {
+    return 'The bot could not move: $message';
+  }
 }

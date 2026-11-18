@@ -20,7 +20,8 @@ Why the split licence: see [docs/adr/0001-licensing.md](docs/adr/0001-licensing.
 | 0 | Monorepo, CI, design system, EN/FR/AR + RTL, app shell | ✅ done |
 | 1 | Offline analysis MVP (PGN + Lichess/Chess.com import, Stockfish, review screen) | ✅ done |
 | 2 | Reports + puzzles from my mistakes | ✅ done |
-| 3 | Bots | next |
+| 3 | Bots: 8 personalities, hints, takebacks, rematch, post-game review | ✅ done |
+| 4 | Backend + accounts, server-side imports, rated puzzles | next |
 
 ## Prerequisites
 
@@ -76,6 +77,15 @@ Localizations are generated from `app/lib/l10n/*.arb` on `pub get` / build
 
 All of them sit behind one interface (`lib/core/engine/`): a `UciTransport` per platform and a
 shared `UciEngine`. Analysis results are cached per position in the local database.
+
+### Bots
+
+Eight bots from ~400 to ~2700 (`lib/features/bots/domain/bot.dart`). They all use Stockfish:
+lower search depth, sampling among the top moves with a "temperature", an occasional random
+move for the weakest, opening-book moves for variety, and a style bonus. Why not Maia yet:
+[docs/adr/0004-bots-stockfish-sampling.md](docs/adr/0004-bots-stockfish-sampling.md).
+Finished bot games are saved to your library with your colour set, so they count in your
+report and their mistakes become puzzles.
 
 ### How reports know which player you are
 
@@ -148,6 +158,7 @@ app/lib/
                 games (PGN + Lichess/Chess.com import, library), analysis (win%, accuracy,
                 classification, motifs, opening book, runner, batch), review (review screen),
                 reports (personal report + weekly focus), puzzles (trainer from own mistakes),
+                bots (personalities, move picker, game controller), play (bot picker),
                 home, analyze, puzzles, play, profile, settings, shell, design_system
   l10n/         ARB files (en, fr, ar) + generated localizations
 ```
