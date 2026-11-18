@@ -1,6 +1,6 @@
 # ADR 0004 — Bots: Stockfish with human-like sampling (Maia later)
 
-- Status: proposed (2026-11-18) — needs product-owner confirmation
+- Status: accepted (2026-11-18) — Maia to be evaluated in a later phase
 
 ## Context
 The brief asks for weak bots that feel human rather than "Stockfish with random blunders",
