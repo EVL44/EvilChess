@@ -21,6 +21,7 @@ class ReviewBoard extends StatefulWidget {
     this.onMove,
     this.semanticLabel,
     this.theme = BoardTheme.grape,
+    this.revision = 0,
   });
 
   final String fen;
@@ -32,6 +33,10 @@ class ReviewBoard extends StatefulWidget {
   final void Function(NormalMove move)? onMove;
   final String? semanticLabel;
   final BoardTheme theme;
+
+  /// Bump to redraw the position even when [fen] is unchanged (e.g. to undo
+  /// a rejected move the player dragged on the board).
+  final int revision;
 
   @override
   State<ReviewBoard> createState() => _ReviewBoardState();
@@ -64,7 +69,8 @@ class _ReviewBoardState extends State<ReviewBoard> {
     super.didUpdateWidget(old);
     if (old.fen != widget.fen ||
         old.interactive != widget.interactive ||
-        old.lastMoveUci != widget.lastMoveUci) {
+        old.lastMoveUci != widget.lastMoveUci ||
+        old.revision != widget.revision) {
       _controller.updatePosition(_gameData());
     }
   }

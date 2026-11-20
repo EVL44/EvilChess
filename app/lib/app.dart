@@ -4,6 +4,8 @@ import 'package:material_ui/material_ui.dart';
 import 'core/router/app_router.dart';
 import 'core/settings/app_settings.dart';
 import 'core/theme/app_theme.dart';
+import 'features/account/account.dart';
+import 'features/sync/sync_controller.dart';
 import 'l10n/app_localizations.dart';
 
 class EvilChessApp extends ConsumerWidget {
@@ -13,6 +15,14 @@ class EvilChessApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final settings = ref.watch(appSettingsProvider);
     final router = ref.watch(appRouterProvider);
+
+    // Sync as soon as a session starts (sign-in, or app start while signed
+    // in). The first sync after signing in uploads the guest's data.
+    ref.listen(accountProvider.select((a) => a.profile?.id), (prev, next) {
+      if (next != null && next != prev) {
+        ref.read(syncProvider.notifier).sync();
+      }
+    });
 
     final effectiveLanguage =
         (settings.locale ?? WidgetsBinding.instance.platformDispatcher.locale)

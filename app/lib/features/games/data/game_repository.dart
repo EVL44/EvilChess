@@ -100,6 +100,8 @@ class GameRepository {
       b.insertAll(_db.games, [
         for (final g in fresh) _toCompanion(g, now, usernames),
       ], mode: InsertMode.insertOrIgnore);
+      // Re-adding a game cancels an earlier deletion.
+      b.deleteWhere(_db.deletedGames, (t) => t.id.isIn(fresh.map((g) => g.id)));
     });
     return fresh.length;
   }
@@ -133,6 +135,7 @@ class GameRepository {
       pgn: g.pgn,
       userSide: Value(side),
       importedAt: now,
+      updatedAt: Value(now.millisecondsSinceEpoch),
     );
   }
 
@@ -195,8 +198,18 @@ class GameRepository {
     );
   }
 
-  Future<void> deleteGame(String id) =>
-      (_db.delete(_db.games)..where((t) => t.id.equals(id))).go();
+  /// Deletes a game here and remembers the deletion for sync.
+  Future<void> deleteGame(String id) => _db.transaction(() async {
+    await (_db.delete(_db.games)..where((t) => t.id.equals(id))).go();
+    await _db
+        .into(_db.deletedGames)
+        .insertOnConflictUpdate(
+          DeletedGamesCompanion.insert(
+            id: id,
+            deletedAt: DateTime.now().millisecondsSinceEpoch,
+          ),
+        );
+  });
 
   // ------------------------------------------------------------- analysis
 
@@ -248,6 +261,7 @@ class GameRepository {
         analyzedAt: Value(DateTime.now()),
         analysisDepth: Value(depth),
         analysisVersion: const Value(kAnalysisVersion),
+        updatedAt: Value(DateTime.now().millisecondsSinceEpoch),
         whiteAccuracy: Value(analysis.whiteAccuracy),
         blackAccuracy: Value(analysis.blackAccuracy),
         // Fill in the opening when the source PGN had none.
@@ -359,7 +373,10 @@ class GameRepository {
   /// Marks which colour the user played in a game (null = unknown).
   Future<void> setUserSide(String gameId, String? side) =>
       (_db.update(_db.games)..where((t) => t.id.equals(gameId))).write(
-        GamesCompanion(userSide: Value(side)),
+        GamesCompanion(
+          userSide: Value(side),
+          updatedAt: Value(DateTime.now().millisecondsSinceEpoch),
+        ),
       );
 
   Future<String?> userSide(String gameId) async {

@@ -9,8 +9,10 @@ import '../../features/design_system/design_system_screen.dart';
 import '../../features/home/home_screen.dart';
 import '../../features/play/play_screen.dart';
 import '../../features/profile/profile_screen.dart';
+import '../../features/puzzles/online_puzzle_screen.dart';
 import '../../features/puzzles/puzzle_trainer_screen.dart';
 import '../../features/puzzles/puzzles_screen.dart';
+import '../../features/puzzles/rush_screen.dart';
 import '../../features/reports/domain/report.dart';
 import '../../features/reports/report_screen.dart';
 import '../../features/review/review_screen.dart';
@@ -31,6 +33,10 @@ abstract final class Routes {
     required String side,
     required bool takebacks,
   }) => '/play/bot/$botId?side=$side&takebacks=${takebacks ? 1 : 0}';
+  static const dailyPuzzle = '/puzzles/daily';
+  static String ratedPuzzles({String? theme}) =>
+      theme == null ? '/puzzles/rated' : '/puzzles/rated?theme=$theme';
+  static String rush(String mode) => '/puzzles/rush/$mode';
   static String puzzleSet(String filter) =>
       '/puzzles/train/${Uri.encodeComponent(filter)}';
   static String review(String gameId) =>
@@ -75,6 +81,26 @@ final appRouterProvider = Provider<GoRouter>((ref) {
                 path: Routes.puzzles,
                 builder: (context, state) => const PuzzlesScreen(),
                 routes: [
+                  GoRoute(
+                    path: 'daily',
+                    parentNavigatorKey: _rootKey,
+                    builder: (context, state) =>
+                        const OnlinePuzzleScreen(mode: OnlinePuzzleMode.daily),
+                  ),
+                  GoRoute(
+                    path: 'rated',
+                    parentNavigatorKey: _rootKey,
+                    builder: (context, state) => OnlinePuzzleScreen(
+                      mode: OnlinePuzzleMode.rated,
+                      theme: state.uri.queryParameters['theme'],
+                    ),
+                  ),
+                  GoRoute(
+                    path: 'rush/:mode',
+                    parentNavigatorKey: _rootKey,
+                    builder: (context, state) =>
+                        RushScreen(mode: state.pathParameters['mode']!),
+                  ),
                   GoRoute(
                     path: 'train/:filter',
                     parentNavigatorKey: _rootKey,

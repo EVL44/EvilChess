@@ -1454,6 +1454,336 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The bot could not move: {message}'**
   String botError(String message);
+
+  /// No description provided for @signInTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in'**
+  String get signInTitle;
+
+  /// No description provided for @signInSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync your games, reports and puzzle rating across devices.'**
+  String get signInSubtitle;
+
+  /// No description provided for @guestNote.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re playing as a guest. Everything stays on this device until you sign in.'**
+  String get guestNote;
+
+  /// No description provided for @emailLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get emailLabel;
+
+  /// No description provided for @passwordLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get passwordLabel;
+
+  /// No description provided for @passwordHint.
+  ///
+  /// In en, this message translates to:
+  /// **'At least 8 characters'**
+  String get passwordHint;
+
+  /// No description provided for @displayNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Display name (optional)'**
+  String get displayNameLabel;
+
+  /// No description provided for @signInButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in'**
+  String get signInButton;
+
+  /// No description provided for @createAccountButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Create account'**
+  String get createAccountButton;
+
+  /// No description provided for @switchToRegister.
+  ///
+  /// In en, this message translates to:
+  /// **'New here? Create an account'**
+  String get switchToRegister;
+
+  /// No description provided for @switchToSignIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Already have an account? Sign in'**
+  String get switchToSignIn;
+
+  /// No description provided for @continueWithGoogle.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Google'**
+  String get continueWithGoogle;
+
+  /// No description provided for @continueWithApple.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Apple'**
+  String get continueWithApple;
+
+  /// No description provided for @socialSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Google and Apple sign-in will be switched on once the app is registered with them.'**
+  String get socialSoon;
+
+  /// No description provided for @signOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign out'**
+  String get signOut;
+
+  /// No description provided for @puzzleRatingLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Puzzle rating'**
+  String get puzzleRatingLabel;
+
+  /// No description provided for @puzzlesPlayedCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 rated puzzle} other{{count} rated puzzles}}'**
+  String puzzlesPlayedCount(int count);
+
+  /// No description provided for @syncTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync'**
+  String get syncTitle;
+
+  /// No description provided for @syncing.
+  ///
+  /// In en, this message translates to:
+  /// **'Syncing…'**
+  String get syncing;
+
+  /// No description provided for @syncDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Synced: {sent} sent, {received} received'**
+  String syncDone(int sent, int received);
+
+  /// No description provided for @syncFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync failed: {message}'**
+  String syncFailed(String message);
+
+  /// No description provided for @serverOffline.
+  ///
+  /// In en, this message translates to:
+  /// **'Can\'t reach the server. Your data is safe on this device.'**
+  String get serverOffline;
+
+  /// No description provided for @errEmailTaken.
+  ///
+  /// In en, this message translates to:
+  /// **'An account with this email already exists.'**
+  String get errEmailTaken;
+
+  /// No description provided for @errInvalidCredentials.
+  ///
+  /// In en, this message translates to:
+  /// **'Wrong email or password.'**
+  String get errInvalidCredentials;
+
+  /// No description provided for @errRateLimited.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many tries. Wait a minute and try again.'**
+  String get errRateLimited;
+
+  /// No description provided for @errGeneric.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong: {message}'**
+  String errGeneric(String message);
+
+  /// No description provided for @editName.
+  ///
+  /// In en, this message translates to:
+  /// **'Change name'**
+  String get editName;
+
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
+  /// No description provided for @importingOnServer.
+  ///
+  /// In en, this message translates to:
+  /// **'Importing on the server… {count} games so far'**
+  String importingOnServer(int count);
+
+  /// No description provided for @dailyPuzzle.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily puzzle'**
+  String get dailyPuzzle;
+
+  /// No description provided for @dailyPuzzleBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The same puzzle for everyone, every day.'**
+  String get dailyPuzzleBody;
+
+  /// No description provided for @ratedPuzzles.
+  ///
+  /// In en, this message translates to:
+  /// **'Rated puzzles'**
+  String get ratedPuzzles;
+
+  /// No description provided for @ratedPuzzlesBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Millions of puzzles from the Lichess database, matched to your rating.'**
+  String get ratedPuzzlesBody;
+
+  /// No description provided for @signInForRated.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to play rated puzzles and keep a puzzle rating.'**
+  String get signInForRated;
+
+  /// No description provided for @puzzleRush.
+  ///
+  /// In en, this message translates to:
+  /// **'Puzzle Rush'**
+  String get puzzleRush;
+
+  /// No description provided for @puzzleRushBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Solve as many as you can. Three mistakes and you are out.'**
+  String get puzzleRushBody;
+
+  /// No description provided for @rush3min.
+  ///
+  /// In en, this message translates to:
+  /// **'3 min'**
+  String get rush3min;
+
+  /// No description provided for @rush5min.
+  ///
+  /// In en, this message translates to:
+  /// **'5 min'**
+  String get rush5min;
+
+  /// No description provided for @rushSurvival.
+  ///
+  /// In en, this message translates to:
+  /// **'Survival'**
+  String get rushSurvival;
+
+  /// No description provided for @rushScore.
+  ///
+  /// In en, this message translates to:
+  /// **'Score {score}'**
+  String rushScore(int score);
+
+  /// No description provided for @rushBest.
+  ///
+  /// In en, this message translates to:
+  /// **'Best {best}'**
+  String rushBest(int best);
+
+  /// No description provided for @rushNewBest.
+  ///
+  /// In en, this message translates to:
+  /// **'New best!'**
+  String get rushNewBest;
+
+  /// No description provided for @rushTimeUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Time\'s up!'**
+  String get rushTimeUp;
+
+  /// No description provided for @rushStruckOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Three strikes!'**
+  String get rushStruckOut;
+
+  /// No description provided for @rushPlayAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Play again'**
+  String get rushPlayAgain;
+
+  /// No description provided for @findBestMove.
+  ///
+  /// In en, this message translates to:
+  /// **'Find the best move for {side}'**
+  String findBestMove(String side);
+
+  /// No description provided for @puzzleCorrect.
+  ///
+  /// In en, this message translates to:
+  /// **'Correct!'**
+  String get puzzleCorrect;
+
+  /// No description provided for @ratingChange.
+  ///
+  /// In en, this message translates to:
+  /// **'Rating {rating} ({delta})'**
+  String ratingChange(int rating, String delta);
+
+  /// No description provided for @puzzleNotRated.
+  ///
+  /// In en, this message translates to:
+  /// **'Already played: not rated again.'**
+  String get puzzleNotRated;
+
+  /// No description provided for @offlinePack.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline pack'**
+  String get offlinePack;
+
+  /// No description provided for @offlinePackBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No puzzles saved yet. Download some to play Puzzle Rush without internet.} =1{1 puzzle saved on this device.} other{{count} puzzles saved on this device.}}'**
+  String offlinePackBody(int count);
+
+  /// No description provided for @downloadPack.
+  ///
+  /// In en, this message translates to:
+  /// **'Download 100 puzzles'**
+  String get downloadPack;
+
+  /// No description provided for @playingOffline.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline: playing puzzles saved on this device.'**
+  String get playingOffline;
+
+  /// No description provided for @puzzlesUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load puzzles from the server.'**
+  String get puzzlesUnavailable;
+
+  /// No description provided for @nextPuzzle.
+  ///
+  /// In en, this message translates to:
+  /// **'Next puzzle'**
+  String get nextPuzzle;
 }
 
 class _AppLocalizationsDelegate
